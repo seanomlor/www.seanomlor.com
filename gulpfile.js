@@ -1,18 +1,22 @@
 const gulp = require('gulp')
 const gconcat = require('gulp-concat')
+const gdata = require('gulp-data')
 const gdebug = require('gulp-debug')
 const gfrontMatter = require('gulp-front-matter')
-const glayout = require('layout1')
+const grename = require('gulp-rename')
+const grev = require('gulp-rev')
 const gsass = require('gulp-sass')
-const gsourcemaps = require('gulp-sourcemaps')
-const gconnect = require('gulp-connect')
 const gtap = require('gulp-tap')
 const gterser = require('gulp-terser')
 const gutil = require('gulp-util')
+const gwrap = require('gulp-wrap')
+const MarkdownIt = require('markdown-it')
+const browserSync = require('browser-sync').create()
 const del = require('del')
+const fs = require('fs')
 const markdownItFootnote = require('markdown-it-footnote')
 const markdownItPrism = require('markdown-it-prism')
-const MarkdownIt = require('markdown-it')
+const path = require('path')
 
 const md = new MarkdownIt({
   html: true,
@@ -20,65 +24,97 @@ const md = new MarkdownIt({
   .use(markdownItFootnote)
   .use(markdownItPrism)
 
-const markdownToHtml = file => {
-  var result = md.render(file.contents.toString())
-  file.contents = Buffer.from(result)
-  file.path = gutil.replaceExtension(file.path, '.html')
-  return file
-}
-
-// get template from frontmatter layout attribute, else default to index.njk
-const getTemplate = file => `src/templates/${file.data.layout || 'index'}.njk`
-
 gulp.task('md', () =>
   gulp
-    .src('./src/content/**/*.md')
+    .src('src/content/**/*.md')
     .pipe(gfrontMatter({ property: 'data' }))
-    .pipe(gtap(markdownToHtml))
-    .pipe(glayout.nunjucks(getTemplate))
-    .pipe(gulp.dest('./dist'))
-    .pipe(gconnect.reload())
+    .pipe(
+      // include parsed manifest in data
+      gdata(_file => ({
+        assets: JSON.parse(fs.readFileSync('dist/manifest.json')),
+      }))
+    )
+    .pipe(
+      // convert markdown to html
+      gtap(file => {
+        var result = md.render(file.contents.toString())
+        file.contents = Buffer.from(result)
+        file.path = gutil.replaceExtension(file.path, '.html')
+        return file
+      })
+    )
+    .pipe(
+      gwrap(
+        // get template from layout attribute, default to index.njk
+        data => {
+          const template = `${path.parse(data.layout || 'index').name}.njk`
+          return fs.readFileSync(`src/templates/${template}`).toString()
+        },
+        null,
+        { engine: 'nunjucks' }
+      )
+    )
+    .pipe(gulp.dest('dist'))
 )
 
 gulp.task('css', () =>
   gulp
-    .src('./src/css/**/*.+(scss|css)')
+    .src('src/css/**/*.+(scss|css)')
     .pipe(
       gsass({
         outputStyle: 'compressed',
       }).on('error', gsass.logError)
     )
-    .pipe(gulp.dest('./dist/css'))
-    .pipe(gconnect.reload())
+    .pipe(grev())
+    .pipe(gulp.dest('dist/css'))
+    .pipe(grename({ dirname: 'css' }))
+    .pipe(
+      grev.manifest('dist/manifest.json', {
+        base: 'dist',
+        merge: true,
+      })
+    )
+    .pipe(gulp.dest('dist'))
 )
 
 gulp.task('js', () =>
   gulp
-    .src('./src/js/**/*.js')
-    .pipe(gsourcemaps.init())
+    .src('src/js/**/*.js')
     .pipe(gconcat('scripts.js'))
     .pipe(gterser())
-    .pipe(gsourcemaps.write('.'))
-    .pipe(gulp.dest('./dist/js'))
-    .pipe(gconnect.reload())
+    .pipe(grev())
+    .pipe(gulp.dest('dist/js'))
+    .pipe(grename({ dirname: 'js' }))
+    .pipe(
+      grev.manifest('dist/manifest.json', {
+        base: 'dist',
+        merge: true,
+      })
+    )
+    .pipe(gulp.dest('dist'))
 )
 
 gulp.task('serve', () =>
-  gconnect.server({
-    root: 'dist',
-    livereload: true,
-    port: 5001,
+  browserSync.init({
+    server: 'dist',
   })
 )
 
-gulp.task('clean', () => del(['dist/**/*']))
-
-gulp.task('watch', () => {
-  gulp.watch('./src/css/**/*.scss', gulp.parallel('css'))
-  gulp.watch('./src/js/**/*.js', gulp.parallel('js'))
-  gulp.watch('./src/(content|templates)/**/*.(md|njk)', gulp.parallel('md'))
+gulp.task('reload', done => {
+  browserSync.reload()
+  done()
 })
 
-gulp.task('build', gulp.parallel('md', 'css', 'js'))
+gulp.task('watch', () => {
+  gulp.watch('src/css/**/*.scss', gulp.series('css', 'md', 'reload'))
+  gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
+  gulp.watch('src/content/**/*.md', gulp.series('md', 'reload'))
+  gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))
+})
 
+gulp.task('clean', () => del(['dist/**/*']))
+
+// Main
+
+gulp.task('build', gulp.series('css', 'js', 'md'))
 gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'serve')))
