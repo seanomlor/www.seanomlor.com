@@ -6,6 +6,7 @@ const gfrontMatter = require('gulp-front-matter')
 const grename = require('gulp-rename')
 const grev = require('gulp-rev')
 const gsass = require('gulp-sass')
+const gsourcemaps = require('gulp-sourcemaps')
 const gtap = require('gulp-tap')
 const gterser = require('gulp-terser')
 const gutil = require('gulp-util')
@@ -88,9 +89,11 @@ gulp.task('css', () =>
 gulp.task('js', () =>
   gulp
     .src('src/js/**/*.js')
+    .pipe(gsourcemaps.init())
     .pipe(gconcat('scripts.js'))
     .pipe(gterser())
     .pipe(grev())
+    .pipe(gsourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'))
     .pipe(grename({ dirname: 'js' }))
     .pipe(
