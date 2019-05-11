@@ -11,6 +11,7 @@ const grename = require('gulp-rename')
 const grev = require('gulp-rev')
 const gsass = require('gulp-sass')
 const gsourcemaps = require('gulp-sourcemaps')
+const gstylelint = require('gulp-stylelint')
 const gtap = require('gulp-tap')
 const gterser = require('gulp-terser')
 const gutil = require('gulp-util')
@@ -26,6 +27,7 @@ const markdownItBracketedSpans = require('markdown-it-bracketed-spans')
 const markdownItFootnote = require('markdown-it-footnote')
 const markdownItPrism = require('markdown-it-prism')
 const path = require('path')
+const postcssReporter = require('postcss-reporter')
 
 const markdownIt = new MarkdownIt({
   html: true,
@@ -119,7 +121,19 @@ gulp.task('css', () =>
     .src('src/css/**/*.+(scss|css)')
     .pipe(gplumber({ errorHandler }))
     .pipe(gsass({ outputStyle: 'expanded' }))
-    .pipe(gpostcss([autoprefixer, cssnano]))
+    .pipe(
+      gpostcss([
+        postcssReporter({ clearReportedMessages: true }),
+        autoprefixer,
+        cssnano,
+      ])
+    )
+    .pipe(
+      gstylelint({
+        failAfterError: false,
+        reporters: [{ formatter: 'verbose', console: true }],
+      })
+    )
     .pipe(grev())
     .pipe(gulp.dest('dist/css'))
     .pipe(grename({ dirname: 'css' }))
