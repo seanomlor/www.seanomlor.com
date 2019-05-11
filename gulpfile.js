@@ -2,6 +2,7 @@ const gulp = require('gulp')
 const gconcat = require('gulp-concat')
 const gdata = require('gulp-data')
 const gfrontMatter = require('gulp-front-matter')
+const gimagemin = require('gulp-imagemin')
 const grename = require('gulp-rename')
 const grev = require('gulp-rev')
 const gsass = require('gulp-sass')
@@ -43,6 +44,13 @@ markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
 // task: copy fonts
 gulp.task('fonts', () =>
   gulp.src('src/fonts/**/*').pipe(gulp.dest('dist/fonts'))
+)
+
+gulp.task('images', () =>
+  gulp
+    .src('src/images/**/*')
+    .pipe(gimagemin())
+    .pipe(gulp.dest('dist/images'))
 )
 
 // task:
@@ -144,9 +152,11 @@ gulp.task('reload', done => {
 
 // task: watch src, trigger build and reload
 gulp.task('watch', () => {
-  gulp.watch('src/css/**/*.scss', gulp.series('css', 'md', 'reload'))
-  gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
   gulp.watch('src/content/**/*.md', gulp.series('md', 'reload'))
+  gulp.watch('src/css/**/*.scss', gulp.series('css', 'md', 'reload'))
+  gulp.watch('src/fonts/**/*', gulp.series('fonts', 'reload'))
+  gulp.watch('src/images/**/*', gulp.series('images', 'reload'))
+  gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
   gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))
 })
 
@@ -154,7 +164,7 @@ gulp.task('watch', () => {
 gulp.task('clean', () => del(['dist/**/*']))
 
 // task: build site
-gulp.task('build', gulp.series('fonts', 'css', 'js', 'md'))
+gulp.task('build', gulp.series('fonts', 'images', 'css', 'js', 'md'))
 
 // task: develop
 gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'serve')))
