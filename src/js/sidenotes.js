@@ -115,7 +115,7 @@
         const insertSideNote = createInsertSidenote()
         document.querySelectorAll('sup.footnote-ref a').forEach(insertSideNote)
         done = true
-        console.info('sidenote: done.')
+        console.info('sidenotes: done.')
       }
     })
   }
