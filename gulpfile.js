@@ -4,6 +4,8 @@ const gdata = require('gulp-data')
 const gfrontMatter = require('gulp-front-matter')
 const gimagemin = require('gulp-imagemin')
 const gnewer = require('gulp-newer')
+const gnotify = require('gulp-notify')
+const gplumber = require('gulp-plumber')
 const gpostcss = require('gulp-postcss')
 const grename = require('gulp-rename')
 const grev = require('gulp-rev')
@@ -45,6 +47,17 @@ markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
   return tokens[idx].meta.subId > 0 ? n + ':' + tokens[idx].meta.subId : n
 }
 
+// gulp-plumber handler to trigger notification and beep
+// function format to capture `this` ಠ_ಠ
+const errorHandler = function(err) {
+  gnotify.onError({
+    title: 'Gulp error in ' + err.plugin,
+    message: err.toString(),
+  })(err)
+  gutil.beep()
+  this.emit('end')
+}
+
 // task: copy fonts
 gulp.task('fonts', () =>
   gulp
@@ -68,6 +81,7 @@ gulp.task('images', () =>
 gulp.task('md', () =>
   gulp
     .src('src/content/**/*.md')
+    .pipe(gplumber({ errorHandler }))
     .pipe(gulp.dest('dist'))
     .pipe(gfrontMatter({ property: 'data' }))
     .pipe(
@@ -103,11 +117,8 @@ gulp.task('md', () =>
 gulp.task('css', () =>
   gulp
     .src('src/css/**/*.+(scss|css)')
-    .pipe(
-      gsass({
-        outputStyle: 'expanded',
-      }).on('error', gsass.logError)
-    )
+    .pipe(gplumber({ errorHandler }))
+    .pipe(gsass({ outputStyle: 'expanded' }))
     .pipe(gpostcss([autoprefixer, cssnano]))
     .pipe(grev())
     .pipe(gulp.dest('dist/css'))
@@ -125,6 +136,7 @@ gulp.task('css', () =>
 gulp.task('js', () =>
   gulp
     .src('src/js/**/*.js')
+    .pipe(gplumber({ errorHandler }))
     .pipe(gsourcemaps.init())
     .pipe(gconcat('scripts.js'))
     .pipe(gterser())
@@ -147,7 +159,7 @@ gulp.task('serve', () =>
     server: 'dist',
     callbacks: {
       ready: (_err, bs) => {
-        // serve *.md from dist as text/plain
+        // serve *.md files as text/plain
         bs.utils.serveStatic.mime.define({ 'text/plain': ['md'] })
       },
     },
