@@ -49,15 +49,15 @@ code,
 pre[class*='language-'] {
   background-color: #fcfaf5;
   color: $base01;
-  font-family: 'Fira Code', monospace;
   direction: ltr;
-  text-align: left;
-  word-spacing: normal;
-  word-break: normal;
+  font-family: 'Fira Code', monospace;
   font-size: 1.15rem;
-  line-height: 1.65rem;
-  -moz-tab-size: 4;
   hyphens: none;
+  line-height: 1.65rem;
+  tab-size: 4;
+  text-align: left;
+  word-break: normal;
+  word-spacing: normal;
 }
 
 // inline code
