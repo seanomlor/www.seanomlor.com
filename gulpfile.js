@@ -3,6 +3,7 @@ const gconcat = require('gulp-concat')
 const gdata = require('gulp-data')
 const gfrontMatter = require('gulp-front-matter')
 const gimagemin = require('gulp-imagemin')
+const gnewer = require('gulp-newer')
 const gpostcss = require('gulp-postcss')
 const grename = require('gulp-rename')
 const grev = require('gulp-rev')
@@ -46,12 +47,17 @@ markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
 
 // task: copy fonts
 gulp.task('fonts', () =>
-  gulp.src('src/fonts/**/*').pipe(gulp.dest('dist/fonts'))
+  gulp
+    .src('src/fonts/**/*')
+    .pipe(gnewer('dist/fonts'))
+    .pipe(gulp.dest('dist/fonts'))
 )
 
+// task: optimize and copy images
 gulp.task('images', () =>
   gulp
     .src('src/images/**/*')
+    .pipe(gnewer('dist/images'))
     .pipe(gimagemin())
     .pipe(gulp.dest('dist/images'))
 )
