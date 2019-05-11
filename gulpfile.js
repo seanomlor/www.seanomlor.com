@@ -1,7 +1,6 @@
 const gulp = require('gulp')
 const gconcat = require('gulp-concat')
 const gdata = require('gulp-data')
-const gdebug = require('gulp-debug')
 const gfrontMatter = require('gulp-front-matter')
 const grename = require('gulp-rename')
 const grev = require('gulp-rev')
@@ -25,15 +24,19 @@ const markdownIt = new MarkdownIt({
   .use(markdownItFootnote)
   .use(markdownItPrism)
 
+// just bare numbers for footnote refs
 markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
   const n = Number(tokens[idx].meta.id + 1).toString()
   return tokens[idx].meta.subId > 0 ? n + ':' + tokens[idx].meta.subId : n
 }
 
-// task: compile markdown
+// task:
+// 1. copy raw markdown
+// 2. compile markdown to html with nunjucks template
 gulp.task('md', () =>
   gulp
     .src('src/content/**/*.md')
+    .pipe(gulp.dest('dist'))
     .pipe(gfrontMatter({ property: 'data' }))
     .pipe(
       // include parsed manifest in data
@@ -109,6 +112,12 @@ gulp.task('js', () =>
 gulp.task('serve', () =>
   browserSync.init({
     server: 'dist',
+    callbacks: {
+      ready: (_err, bs) => {
+        // serve *.md from dist as text/plain
+        bs.utils.serveStatic.mime.define({ 'text/plain': ['md'] })
+      },
+    },
   })
 )
 
