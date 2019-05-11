@@ -10,10 +10,12 @@ const gtap = require('gulp-tap')
 const gterser = require('gulp-terser')
 const gutil = require('gulp-util')
 const gwrap = require('gulp-wrap')
-const MarkdownIt = require('markdown-it')
 const browserSync = require('browser-sync').create()
 const del = require('del')
 const fs = require('fs')
+const MarkdownIt = require('markdown-it')
+const markdownItBracketedSpans = require('markdown-it-bracketed-spans')
+const markdownItAttrs = require('markdown-it-attrs')
 const markdownItFootnote = require('markdown-it-footnote')
 const markdownItPrism = require('markdown-it-prism')
 const path = require('path')
@@ -21,14 +23,27 @@ const path = require('path')
 const markdownIt = new MarkdownIt({
   html: true,
 })
+  // support spans via brackets
+  // e.g. `hello [foo] bar` => `hello <span>foo</span> bar`
+  .use(markdownItBracketedSpans)
+  // support markdown styles
+  // e.g. `# hello {.red}` => `<h1 class="red">hello</h1>`
+  .use(markdownItAttrs)
+  // generate footnotes
   .use(markdownItFootnote)
+  // add code highlight classes
   .use(markdownItPrism)
 
-// just bare numbers for footnote refs
+// use bare numbers for footnote refs instead of wrapping in brackets
 markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
   const n = Number(tokens[idx].meta.id + 1).toString()
   return tokens[idx].meta.subId > 0 ? n + ':' + tokens[idx].meta.subId : n
 }
+
+// task: copy fonts
+gulp.task('fonts', () =>
+  gulp.src('src/fonts/**/*').pipe(gulp.dest('dist/fonts'))
+)
 
 // task:
 // 1. copy raw markdown
@@ -139,7 +154,7 @@ gulp.task('watch', () => {
 gulp.task('clean', () => del(['dist/**/*']))
 
 // task: build site
-gulp.task('build', gulp.series('css', 'js', 'md'))
+gulp.task('build', gulp.series('fonts', 'css', 'js', 'md'))
 
 // task: develop
 gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'serve')))

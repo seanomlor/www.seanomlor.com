@@ -1,6 +1,6 @@
-// colors
 $color-black: #333;
 $color-white: #fffefd;
+// $color-white: #fffff8;
 $color-grey: #6c6c6c;
 $color-light: #afafba;
 $color-blue: #109cd9;
@@ -9,12 +9,73 @@ $grid-column-aside: 300;
 $grid-gap: 10;
 $sidenotes-max-width: 1420px;
 
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-Regular.eot');
+  src: url('/fonts/Lora-Regular.eot') format('embedded-opentype'),
+    url('/fonts/Lora-Regular.woff2') format('woff2'),
+    url('/fonts/Lora-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-Italic.eot');
+  src: url('/fonts/Lora-Italic.eot') format('embedded-opentype'),
+    url('/fonts/Lora-Italic.woff2') format('woff2'),
+    url('/fonts/Lora-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-Medium.eot');
+  src: url('/fonts/Lora-Medium.eot') format('embedded-opentype'),
+    url('/fonts/Lora-Medium.woff2') format('woff2'),
+    url('/fonts/Lora-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-MediumItalic.eot');
+  src: url('/fonts/Lora-MediumItalic.eot') format('embedded-opentype'),
+    url('/fonts/Lora-MediumItalic.woff2') format('woff2'),
+    url('/fonts/Lora-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-Bold.eot');
+  src: url('/fonts/Lora-Bold.eot') format('embedded-opentype'),
+    url('/fonts/Lora-Bold.woff2') format('woff2'),
+    url('/fonts/Lora-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('/fonts/Lora-BoldItalic.eot');
+  src: url('/fonts/Lora-BoldItalic.eot') format('embedded-opentype'),
+    url('/fonts/Lora-BoldItalic.woff2') format('woff2'),
+    url('/fonts/Lora-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+}
+
 body {
   background-color: $color-white;
   border-radius: 3px;
   color: $color-black;
   display: grid;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lora', serif;
+  font-feature-settings: 'liga', 'clig';
   font-size: 1.15em;
   font-weight: 400;
   grid-gap: #{$grid-gap}px;
@@ -26,6 +87,31 @@ body {
   margin: 0 auto;
   max-width: 1390px;
   padding: 15px;
+  text-shadow: 0 0 1px transparentize($color-grey, 0.8);
+}
+
+h1 {
+  font-size: 1.75em;
+  line-height: 1.35em;
+  font-weight: 400;
+
+  &.title {
+    border-bottom: 3px solid;
+    display: inline-block;
+  }
+}
+
+h2 {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.15em;
+  line-height: 1.5em;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 header[role='banner'],
@@ -230,4 +316,19 @@ img.avatar {
   aside#right {
     display: none;
   }
+}
+
+// font-features-settings for Lora font
+// see: https://beautifulwebtype.com/lora
+
+.frac {
+  font-feature-settings: 'frac';
+}
+
+.sup {
+  font-feature-settings: 'sups';
+}
+
+.ordn {
+  font-feature-settings: 'ordn';
 }

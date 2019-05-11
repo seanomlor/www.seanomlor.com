@@ -1,55 +1,50 @@
 ---
 title: 'Hello World'
+updated_at: 'May 11, 2019'
 ---
 
-# Hello World!
+[Example](/example)
 
-Vestibulum[^1] leo turpis, dignissim[^digni] quis ultrices sit amet, iaculis[^iacu] ac ligula. Pellentesque tristique, velit eget scelerisque scelerisque, est dolor ultrices arcu, quis ullamcorper. Integer congue molestie nisi id posuere. Fusce pellentesque gravida tempus. Integer viverra tortor nec eros mollis quis convallis sem laoreet. Nulla id libero ac erat varius laoreet. Proin sed est est. [Curabitur lacinia fermentum](https://en.wikipedia.org/wiki/Lactobacillus_fermentum) lorem, elementum malesuada ipsum malesuada ut. Donec suscipit elit id leo vehicula mattis non sed leo. Morbi varius eleifend varius. Nulla vestibulum, neque vitae aliquam eleifend, nisi tellus placerat nunc, quis `suscipit elit turpis` eu tortor. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus eu egestas nulla convallis. Aliquam vel ullamcorper risus. Fusce dictum, massa id consequat viverra, nulla ante tristique est, a faucibus nisi enim nec dui. Donec metus ligula, condimentum at porttitor eget, lobortis at quam.
+# Hello, my name is Sean. I'm an Elixir and JavaScript web developer.
 
-[^1]: 
-    Eleifend fermentum [vestibulum](<https://en.wikipedia.org/wiki/Inferno_(Dante)#Overview_and_vestibule_of_Hell>) vel nibh, a metus porttitor rhoncus. 
-  
-    Pellentesque id quam neque, eget molestie arcu. Faucibus nisi enim nec dui. Donec metus ligula pellentesque gravida tempus. Integer viverra tortor nec eros mollis quis convallis sem laoreet.
+## Browse my work below, check out my [resume](/resume), and [contact me](/contact). 
 
-[^digni]: Suscipit elit turpis eu tortor. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus eu egestas nulla convallis. Aliquam vel ullamcorper risus.
+### Summary
 
-[^iacu]: Malesuada ipsum malesuada ut. Donec suscipit elit id leo vehicula mattis non sed leo. Morbi varius eleifend varius. Nulla vestibulum, neque vitae aliquam eleifend, nisi tellus placerat nunc, quis suscipit elit turpis eu tortor. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus eu egestas.
+I am a web developer with nearly twenty years of professional experience. My current focus is building functional web applications with [Elixir](https://elixir-lang.org), [Phoenix](https://phoenixframework.org)[^previously] and [React.js](https://reactjs.org)[^react].
 
-``` javascript
-// Let's make these comments very long so that our container has to overflow. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus eu egestas.
-// Nulla vestibulum, neque vitae aliquam eleifend, nisi tellus placerat nunc, quis suscipit elit turpis eu tortor. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus.
+[^previously]:
+    Previously [Ruby](https://www.ruby-lang.org/en) and [Ruby on Rails](https://rubyonrails.org).
 
-// our sum function
-const sum = ns => ns.map(i => i + 1 + 5.0)
+[^react]:
+    With [Redux](https://redux.js.org), [Apollo](https://www.apollographql.com) or [re-frame](https://github.com/Day8/re-frame) for state management.
 
-sum([1, 3, 5])
-```
+[See my full resume →](/resume)
 
-Aenean[^aen] vel libero in magna ultricies congue in a odio. Donec faucibus rutrum
-ornare. Fusce dictum eleifend fermentum. Vestibulum vel nibh a metus porttitor
-rhoncus. Pellentesque id quam[^qua] neque, eget molestie arcu. Integer in elit vel
-neque viverra ultricies in eget massa. Nam ut convallis est. Pellentesque eros
-eros, sodales non vehicula et, tincidunt ut odio. Cras suscipit ultrices metus
-sit amet molestie. Fusce enim leo, vehicula sed sodales quis, adipiscing at
-ipsum.
+### Technical Skills
 
-[^aen]: Nisl _morbi_ eget commodo mollis, sem magna. Consequat arcu, sed pretium ipsum arcu sit amet neque, aliquam erat volutpat.
-[^qua]: Consequat arcu, sed pretium ipsum arcu sit amet neque, aliquam erat volutpat.
+My technical skills include:
 
-```haskell
-foldl :: (a -> b -> a) -> a -> [b] -> a
-foldl _ v [] = v
-foldl f v (x:xs) = foldl f (f v x) xs
-```
+  - Elixir, Phoenix, Ecto, (also Ruby, Ruby on Rails, Sinatra, RSpec)
+  - JavaScript, React.js, Redux, Ember.js, Backbone.js, jQuery, Jasmine
+  - Webpack, Gulp[^gulp], npm, yarn
+  - SQL [ PostgreSQL, MySQL, SQLite ], Elasticsearch, Solr
+  - HTML/5, CSS/3, Sass, Responsive Design
+  - Linux, nginx, Apache, Heroku, Vagrant, Ansible
+  - Git, GitHub, Bitbucket, JIRA, Pivotal Tracker
 
-Nunc tempor dignissim enim, sed tincidunt eros bibendum quis. Curabitur et dolor
-augue, id laoreet mi. Nulla cursus felis id dui vehicula vitae ornare lorem
-blandit. Cras eget dui nec odio volutpat pharetra. Fusce hendrerit justo justo,
-vel imperdiet enim. Vivamus elit risus, interdum ultrices accumsan eleifend,
-vestibulum vitae sapien. Integer bibendum ullamcorper tristique. Nulla quis odio
-lectus, quis eleifend augue. Integer a ligula mauris. Aenean et tempus tortor.
-Quisque at tortor mi. Vivamus accumsan feugiat est a blandit. Sed vitae enim ut
-dolor semper sodales. Duis tristique, ante et placerat elementum, nulla tellus
-pellentesque sapien, quis posuere velit mi eget nulla. Sed vestibulum nunc non
-est porttitor ut rutrum nibh semper. Pellentesque habitant morbi tristique
-senectus et netus et malesuada fames ac turpis egestas.
+[^gulp]:
+    This site is built with Gulp. 🙂
+
+### About Me
+
+Beyond hacking, other [strange loops](https://en.wikipedia.org/wiki/Strange_loop) I keep spiralling through: How to see things [as they are](https://en.wikipedia.org/wiki/Ziran), how to be moved by [deep meditation](https://www.amazon.com/Mind-Illuminated-Meditation-Integrating-Mindfulness/dp/1501156985)[^meditation], how to remain still while [walking the circle](https://en.wikipedia.org/wiki/Baguazhang), how to play [chess on the ground](https://en.wikipedia.org/wiki/Brazilian_jiu-jitsu), how to show up with [authentic relational presence](https://www.circlinginstitute.com/), how to share true value in this [floating world](https://en.wikipedia.org/wiki/Ukiyo).
+
+[^meditation]:
+    I'm currently convinced ["The Mind Illuminated"](https://www.amazon.com/Mind-Illuminated-Meditation-Integrating-Mindfulness/dp/1501156985) is the best book on meditation I've ever read. An incredible gem.
+
+### Contact me
+
+Sorry, I am currently unavailable for hire. Feel free to contact me anyway, will do my best to help point you in the right direction.
+
+{include-contact-form}
