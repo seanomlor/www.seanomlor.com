@@ -18,12 +18,18 @@ const markdownItFootnote = require('markdown-it-footnote')
 const markdownItPrism = require('markdown-it-prism')
 const path = require('path')
 
-const md = new MarkdownIt({
+const markdownIt = new MarkdownIt({
   html: true,
 })
   .use(markdownItFootnote)
   .use(markdownItPrism)
 
+markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
+  const n = Number(tokens[idx].meta.id + 1).toString()
+  return tokens[idx].meta.subId > 0 ? n + ':' + tokens[idx].meta.subId : n
+}
+
+// task: compile markdown
 gulp.task('md', () =>
   gulp
     .src('src/content/**/*.md')
@@ -37,7 +43,7 @@ gulp.task('md', () =>
     .pipe(
       // convert markdown to html
       gtap(file => {
-        var result = md.render(file.contents.toString())
+        const result = markdownIt.render(file.contents.toString())
         file.contents = Buffer.from(result)
         file.path = gutil.replaceExtension(file.path, '.html')
         return file
@@ -57,6 +63,7 @@ gulp.task('md', () =>
     .pipe(gulp.dest('dist'))
 )
 
+// task: compile sass
 gulp.task('css', () =>
   gulp
     .src('src/css/**/*.+(scss|css)')
@@ -77,6 +84,7 @@ gulp.task('css', () =>
     .pipe(gulp.dest('dist'))
 )
 
+// compile javascript
 gulp.task('js', () =>
   gulp
     .src('src/js/**/*.js')
@@ -94,17 +102,20 @@ gulp.task('js', () =>
     .pipe(gulp.dest('dist'))
 )
 
+// task: dev server
 gulp.task('serve', () =>
   browserSync.init({
     server: 'dist',
   })
 )
 
+// task: refresh dev server
 gulp.task('reload', done => {
   browserSync.reload()
   done()
 })
 
+// task: watch src, trigger build and reload
 gulp.task('watch', () => {
   gulp.watch('src/css/**/*.scss', gulp.series('css', 'md', 'reload'))
   gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
@@ -112,9 +123,11 @@ gulp.task('watch', () => {
   gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))
 })
 
+// task: empty dist
 gulp.task('clean', () => del(['dist/**/*']))
 
-// Main
-
+// task: build site
 gulp.task('build', gulp.series('css', 'js', 'md'))
+
+// task: develop
 gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'serve')))

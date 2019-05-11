@@ -1,0 +1,161 @@
+/*
+prism.js Coy theme for JavaScript, CoffeeScript, CSS and HTML.
+Based on https://github.com/tshedor/workshop-wp-theme
+
+## Examples:
+
+  - http://workshop.kansan.com/category/sessions/basics
+  - http://workshop.timshedor.com/category/sessions/basics
+
+@author Tim  Shedor
+*/
+
+// colors
+$base00: hsl(10, 1%, 10%);
+$base01: hsl(10, 1%, 15%);
+$base02: hsl(10, 2%, 30%);
+$base03: hsl(10, 2%, 40%);
+$base04: hsl(10, 3%, 50%);
+$base05: hsl(10, 4%, 60%);
+$base06: hsl(10, 9%, 87%);
+$base07: hsl(10, 10%, 97%);
+$base08: hsl(0, 65%, 50%);
+$base09: hsl(20, 80%, 48%);
+$base0A: hsl(40, 100%, 45%);
+$base0B: hsl(170, 100%, 30%);
+$base0C: hsl(190, 70%, 35%);
+$base0D: hsl(220, 65%, 50%);
+$base0E: hsl(295, 60%, 48%);
+$base0F: hsl(340, 80%, 45%);
+
+$red: $base08;
+$orange: $base09;
+$yellow: $base0A;
+$green: $base0B;
+$cyan: $base0C;
+$blue: $base0D;
+$violet: $base0E;
+$magenta: $base0F;
+
+pre[class*='language-'] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border: 1px solid transparentize($base02, 0.65);
+  border-radius: 0.1em;
+}
+
+code,
+pre[class*='language-'] {
+  background-color: #fcfaf5;
+  color: $base01;
+  font-family: 'Fira Code', monospace;
+  direction: ltr;
+  text-align: left;
+  word-spacing: normal;
+  word-break: normal;
+  font-size: 1.15rem;
+  line-height: 1.65rem;
+  -moz-tab-size: 4;
+  hyphens: none;
+}
+
+// inline code
+:not(pre) > code {
+  position: relative;
+  padding: 0.25em;
+  border-radius: 0.1em;
+  border: 1px solid transparentize($base02, 0.75);
+}
+
+.token.comment {
+  font-style: italic;
+  opacity: 0.65;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: $base03;
+}
+
+.token.punctuation {
+  color: $base02;
+}
+
+.token.property,
+.token.tag,
+.token.tag-id,
+.token.boolean,
+.token.number,
+.token.function-name,
+.token.constant,
+.token.symbol {
+  color: $red;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.function,
+.token.builtin {
+  color: $green;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable,
+.token.pseudo-class,
+.language-css .token.string,
+.style .token.string {
+  color: $orange;
+  background: rgba(white, 0.5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword,
+.token.class-name {
+  color: $cyan;
+}
+
+.token.regex,
+.token.important {
+  color: adjust-color($yellow, $lightness: -10%);
+}
+
+.token.important {
+  font-weight: normal;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+// Plugin styles
+.token.tab:not(:empty):before,
+.token.cr:before,
+.token.lf:before {
+  color: $base06;
+}
+
+// Plugin styles: Line Numbers
+pre[class*='language-'].line-numbers {
+  padding-left: 0;
+}
+
+pre[class*='language-'].line-numbers code {
+  padding-left: 3.8em;
+}
+
+pre[class*='language-'].line-numbers .line-numbers-rows {
+  left: 0;
+}

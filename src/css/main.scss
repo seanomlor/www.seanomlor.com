@@ -1,3 +1,4 @@
+// colors
 $color-black: #333;
 $color-white: #fffefd;
 $color-grey: #6c6c6c;
@@ -9,12 +10,12 @@ $grid-gap: 10;
 $sidenotes-max-width: 1420px;
 
 body {
-  color: $color-black;
   background-color: $color-white;
   border-radius: 3px;
+  color: $color-black;
   display: grid;
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
+  font-size: 1.15em;
   font-weight: 400;
   grid-gap: #{$grid-gap}px;
   grid-template-areas: 'header header header' 'aside-left content aside-right' 'footer footer footer';
@@ -42,12 +43,12 @@ footer[role='contentinfo'] {
 
 header[role='banner'] {
   grid-area: header;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid $color-grey;
   padding-bottom: 10px;
   padding-top: 20px;
 
   .logo {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     margin-bottom: 10px;
 
     a {
@@ -91,9 +92,8 @@ aside#right {
 
 footer[role='contentinfo'] {
   grid-area: footer;
-  border-top: 1px solid;
+  border-top: 1px solid $color-grey;
   color: $color-grey;
-  font-size: 16px;
   font-weight: 300;
   padding-bottom: 20px;
   text-align: right;
@@ -116,22 +116,23 @@ a {
   &:hover {
     border-bottom: 2px solid $color-blue;
   }
+}
 
-  &.footnote-back {
-    margin-left: 2px;
+.footnote-ref a {
+  background: none;
+  border-bottom: none;
+  margin-left: 2px;
+  text-decoration: none;
+
+  &.hover,
+  &:hover {
+    border-bottom: 2px solid;
   }
+}
 
-  &.footnote-ref {
-    background: none;
-    border-bottom: none;
-    margin-left: 2px;
-    text-decoration: none;
-
-    &.hover,
-    &:hover {
-      border-bottom: 2px solid;
-    }
-  }
+hr.footnotes-sep {
+  border: 0;
+  border-bottom: 1px solid $color-grey;
 }
 
 img.avatar {
@@ -145,7 +146,7 @@ img.avatar {
 #sidenotes-left,
 #sidenotes-right {
   display: block;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 300;
 }
 
@@ -185,6 +186,11 @@ img.avatar {
     border-width: 1px 0;
     clear: both;
     padding: 10px;
+    margin-bottom: 20px;
+
+    a.footnote-backref {
+      display: none;
+    }
 
     p:first-child {
       margin-top: 0px;
@@ -224,11 +230,4 @@ img.avatar {
   aside#right {
     display: none;
   }
-}
-
-pre[class*='language-'] {
-  padding: 1em;
-  margin: 0.5em 0;
-  overflow: auto;
-  border-radius: 0.1em;
 }
