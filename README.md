@@ -6,7 +6,7 @@
 - [x] optimize images
 - [x] add gulp-plumber
 - [x] css lint
-- [ ] js lint
+- [x] js lint
 - [ ] html lint
 - [ ] replace cssnano with clean-css?
       https://github.com/jakubpawlowicz/clean-css
