@@ -3,6 +3,7 @@ const gconcat = require('gulp-concat')
 const gdata = require('gulp-data')
 const geslint = require('gulp-eslint')
 const gfrontMatter = require('gulp-front-matter')
+const ghtmlhint = require('gulp-htmlhint')
 const gimagemin = require('gulp-imagemin')
 const gnewer = require('gulp-newer')
 const gnotify = require('gulp-notify')
@@ -113,6 +114,8 @@ gulp.task('md', () =>
         { engine: 'nunjucks' }
       )
     )
+    .pipe(ghtmlhint())
+    .pipe(ghtmlhint.reporter('htmlhint-stylish'))
     .pipe(gulp.dest('dist'))
 )
 

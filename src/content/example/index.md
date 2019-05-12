@@ -19,7 +19,7 @@ Vestibulum[^1] leo [1/2]{.frac} turpis, dignissim[^digni] quis ultrices sit amet
 
 [^iacu]: Malesuada ipsum malesuada ut. Donec suscipit elit id leo vehicula mattis non sed leo. Morbi varius eleifend varius. Nulla vestibulum, neque vitae aliquam eleifend, nisi tellus placerat nunc, quis suscipit elit turpis eu tortor. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus eu egestas.
 
-``` javascript
+```javascript
 // Let's make these comments very long so that our container has to overflow. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus eu egestas.
 // Nulla vestibulum, neque vitae aliquam eleifend, nisi tellus placerat nunc, quis suscipit elit turpis eu tortor. Etiam euismod convallis lectus quis venenatis. Phasellus laoreet magna in nibh cursus.
 
