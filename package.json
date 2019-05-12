@@ -12,7 +12,6 @@
   "devDependencies": {
     "autoprefixer": "^9.5.1",
     "browser-sync": "^2.26.5",
-    "cssnano": "^4.1.10",
     "del": "^4.1.1",
     "directory-tree": "^2.2.2",
     "eslint": "^5.16.0",
@@ -45,6 +44,7 @@
     "markdown-it-footnote": "^3.0.1",
     "markdown-it-prism": "^2.0.1",
     "nunjucks": "^3.2.0",
+    "postcss-clean": "^1.1.0",
     "postcss-reporter": "^6.0.1",
     "prismjs": "^1.16.0",
     "stylelint": "^10.0.1",

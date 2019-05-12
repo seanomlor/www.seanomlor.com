@@ -20,7 +20,6 @@ const gutil = require('gulp-util')
 const gwrap = require('gulp-wrap')
 const autoprefixer = require('autoprefixer')
 const browserSync = require('browser-sync').create()
-const cssnano = require('cssnano')
 const del = require('del')
 const fs = require('fs')
 const MarkdownIt = require('markdown-it')
@@ -29,6 +28,7 @@ const markdownItBracketedSpans = require('markdown-it-bracketed-spans')
 const markdownItFootnote = require('markdown-it-footnote')
 const markdownItPrism = require('markdown-it-prism')
 const path = require('path')
+const postcssClean = require('postcss-clean')
 const postcssReporter = require('postcss-reporter')
 
 const markdownIt = new MarkdownIt({
@@ -129,7 +129,7 @@ gulp.task('css', () =>
       gpostcss([
         postcssReporter({ clearReportedMessages: true }),
         autoprefixer,
-        cssnano,
+        postcssClean,
       ])
     )
     .pipe(

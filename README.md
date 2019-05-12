@@ -8,7 +8,6 @@
 - [x] css lint
 - [x] js lint
 - [x] html lint
-- [ ] replace cssnano with clean-css?
-      https://github.com/jakubpawlowicz/clean-css
-- [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
+- [x] replace cssnano with clean-css?
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
+- [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
