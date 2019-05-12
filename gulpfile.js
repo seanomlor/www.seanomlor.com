@@ -18,6 +18,7 @@ const gtap = require('gulp-tap')
 const gterser = require('gulp-terser')
 const gutil = require('gulp-util')
 const gwrap = require('gulp-wrap')
+const _ = require('lodash')
 const autoprefixer = require('autoprefixer')
 const browserSync = require('browser-sync').create()
 const crypto = require('crypto')
@@ -98,27 +99,30 @@ gulp.task('md', () =>
     .pipe(gplumber({ errorHandler }))
     .pipe(gulp.dest('dist'))
     .pipe(gfrontMatter({ property: 'data' }))
-    // include parsed manifest in data
     .pipe(
-      gdata(_file => {
-        // parse dist/manifest.json and return manifest data for use in templates:
-        //   {
-        //     manifest: {
-        //       'css/main.css': {
-        //         src: 'css/main-5da6bfc502.css',
-        //         integrity: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
-        //      },
-        //      ...
-        //     }
-        //   }
-        const manifest = JSON.parse(fs.readFileSync('dist/manifest.json'))
-        Object.keys(manifest).reduce((accum, key) => {
-          const src = accum[key]
-          accum[key] = { src, integrity: sri(`dist/${src}`) }
-          return accum
-        }, manifest)
-        return { manifest }
-      })
+      // parse dist/manifest.json and return manifest data for use in templates:
+      //   {
+      //     manifest: {
+      //       'css/main.css': {
+      //         path: '/css/main-5da6bfc502.css',
+      //         hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
+      //      },
+      //      ...
+      //     }
+      //   }
+      gdata(_file => ({
+        manifest: _.reduce(
+          JSON.parse(fs.readFileSync('dist/manifest.json')),
+          (accum, path, asset) => ({
+            ...accum,
+            [asset]: {
+              path: `/${path}`,
+              hash: sri(`dist/${path}`),
+            },
+          }),
+          {}
+        ),
+      }))
     )
     .pipe(
       // convert markdown to html
