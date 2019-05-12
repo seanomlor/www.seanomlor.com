@@ -10,6 +10,7 @@
 - [x] html lint
 - [x] replace cssnano with clean-css?
 - [ ] add contact form to templates/home.njk
+- [ ] add integrity hashes to asset data
 - [ ] fix notifier, colors not parsing in notifications area
 - [ ] compile es6 javascript with import/exports
 - [ ] download latest fira code fonts to src/fonts instead of cdn
