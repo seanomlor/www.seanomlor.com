@@ -58,7 +58,7 @@ markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
 const errorHandler = function(err) {
   gnotify.onError({
     title: 'Gulp error in ' + err.plugin,
-    message: err.toString(),
+    message: err.messageOriginal || err.message,
   })(err)
   gutil.beep()
   this.emit('end')

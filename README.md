@@ -11,8 +11,8 @@
 - [x] replace cssnano with clean-css?
 - [x] add subresource integrity hashes to asset data
 - ~~nunjucks filter to splat object into k="v" attrs~~
+- [x] fix notifier, colors not parsing in notifications area
 - [ ] add contact form to templates/home.njk
-- [ ] fix notifier, colors not parsing in notifications area
 - [ ] compile es6 javascript with import/exports
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
