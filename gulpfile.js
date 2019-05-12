@@ -107,7 +107,7 @@ gulp.task('md', () =>
       gwrap(
         // get template from layout attribute, default to index.njk
         data => {
-          const template = `${path.parse(data.layout || 'index').name}.njk`
+          const template = `${path.parse(data.layout || 'page').name}.njk`
           return fs.readFileSync(`src/templates/${template}`).toString()
         },
         null,

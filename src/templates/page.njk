@@ -1,0 +1,9 @@
+{% extends "src/templates/layout.njk" %}
+
+{% block main %}
+  {% if file.data.title %}
+    <h1 class="title">{{ file.data.title }}</h1>
+  {% endif %}
+
+  {{ contents | safe }}
+{% endblock %}

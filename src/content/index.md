@@ -1,5 +1,6 @@
 ---
 title: 'Hello World'
+layout: 'home'
 updated_at: 'May 11, 2019'
 ---
 

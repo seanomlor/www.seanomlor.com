@@ -38,18 +38,16 @@
 
     <aside id="left">
       <img class="avatar" src="/images/havana-espresso.jpg">
+      {% block left %}{% endblock %}
       <section id="sidenotes-left"></section>
     </aside>
 
     <main role="main">
-      {% if file.data.title %}
-        <h1 class="title">{{ file.data.title }}</h1>
-      {% endif %}
-
-      {{ contents | safe }}
+      {% block main %}{% endblock %}
     </main>
 
     <aside id="right">
+      {% block right %}{% endblock %}
       <section id="sidenotes-right"></section>
     </aside>
 
