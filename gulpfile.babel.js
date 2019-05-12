@@ -7,7 +7,6 @@ import del from 'del'
 import fs from 'fs'
 import gulp from 'gulp'
 import gulpData from 'gulp-data'
-import gulpEslint from 'gulp-eslint'
 import gulpFrontMatter from 'gulp-front-matter'
 import gulpHtmlhint from 'gulp-htmlhint'
 import gulpImagemin from 'gulp-imagemin'
@@ -18,7 +17,6 @@ import gulpPostcss from 'gulp-postcss'
 import gulpRename from 'gulp-rename'
 import gulpRev from 'gulp-rev'
 import gulpSass from 'gulp-sass'
-import gulpSourcemaps from 'gulp-sourcemaps'
 import gulpStylelint from 'gulp-stylelint'
 import gulpTap from 'gulp-tap'
 import gulpUtil from 'gulp-util'
@@ -190,15 +188,11 @@ gulp.task('js', () =>
   gulp
     .src('src/js/index.js')
     .pipe(gulpPlumber({ errorHandler }))
-    .pipe(gulpSourcemaps.init())
     .pipe(
       webpackStream(webpackConfig),
       webpack
     )
-    .pipe(gulpEslint())
-    // .pipe(gulpEslint.format())
     .pipe(gulpRev())
-    .pipe(gulpSourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'))
     .pipe(gulpRename({ dirname: 'js' }))
     .pipe(
