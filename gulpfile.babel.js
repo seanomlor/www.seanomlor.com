@@ -9,21 +9,25 @@ import gulpFrontMatter from 'gulp-front-matter'
 import gulpHtmlhint from 'gulp-htmlhint'
 import gulpImagemin from 'gulp-imagemin'
 import gulpNewer from 'gulp-newer'
+import gulpNoop from 'gulp-noop'
 import gulpNotify from 'gulp-notify'
 import gulpPlumber from 'gulp-plumber'
 import gulpPostcss from 'gulp-postcss'
 import gulpRename from 'gulp-rename'
 import gulpRev from 'gulp-rev'
+import gulpRsync from 'gulp-rsync'
 import gulpSass from 'gulp-sass'
 import gulpStylelint from 'gulp-stylelint'
 import gulpTap from 'gulp-tap'
 import gulpUtil from 'gulp-util'
 import gulpWrap from 'gulp-wrap'
+import inquirer from 'inquirer'
 import MarkdownIt from 'markdown-it'
 import markdownItAttrs from 'markdown-it-attrs'
 import markdownItBracketedSpans from 'markdown-it-bracketed-spans'
 import markdownItFootnote from 'markdown-it-footnote'
 import markdownItPrism from 'markdown-it-prism'
+import PluginError from 'plugin-error'
 import path from 'path'
 import postcssClean from 'postcss-clean'
 import postcssReporter from 'postcss-reporter'
@@ -238,6 +242,58 @@ gulp.task('clean', () => del(['dist/**/*']))
 
 // task: build site
 gulp.task('build', gulp.series('clean', 'fonts', 'images', 'css', 'js', 'md'))
+
+// task: deploy via rsync
+gulp.task('deploy:rsync', done => {
+  const env = process.env.NODE_ENV
+  const hostname = process.env.RSYNC_HOSTNAME
+  const destination = process.env.RSYNC_DESTINATION
+
+  if (_.some([hostname, destination], _.negate(_.isString))) {
+    throw new PluginError({
+      plugin: 'deploy',
+      message: 'missing hostname or destination',
+      showProperties: false,
+    })
+  }
+
+  inquirer
+    .prompt([
+      {
+        type: 'confirm',
+        name: 'confirm',
+        default: false,
+        message: `
+      Are you SURE you want to deploy to ${env}?
+      hostname: ${hostname}
+      destination: ${destination}
+      `,
+      },
+    ])
+    .then(res =>
+      res.confirm
+        ? gulp
+            .src('dist')
+            .pipe(
+              gulpRsync({
+                hostname,
+                destination,
+                root: 'dist',
+                progress: true,
+                incremental: true,
+                recursive: true,
+                verbose: true,
+                clean: true,
+              })
+            )
+            .pipe(gulpNoop())
+            .on('finish', done)
+        : done()
+    )
+})
+
+// task: deploy
+gulp.task('deploy', gulp.series('build', 'deploy:rsync'))
 
 // task: develop
 gulp.task('dev', gulp.series('build', gulp.parallel('watch', 'serve')))

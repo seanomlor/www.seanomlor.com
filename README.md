@@ -15,6 +15,9 @@
 - [x] compile es6 javascript with import/exports
 - [x] eslint for webpack
 - [x] production build for webpack
+- [x] deploy task
+- [ ] replace deprecated gulp-util
+      https://medium.com/gulpjs/gulp-util-ca3b1f9f9ac5
 - [ ] add contact form to templates/home.njk
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists

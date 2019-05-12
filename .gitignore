@@ -1,4 +1,5 @@
-dist/
 hint-report/
 node_modules/
+dist/
 tmp/
+.envrc
