@@ -1,5 +1,3 @@
-'use strict'
-
 import _ from 'lodash'
 import autoprefixer from 'autoprefixer'
 import crypto from 'crypto'
@@ -32,7 +30,7 @@ import postcssReporter from 'postcss-reporter'
 import { create as browserSyncCreate } from 'browser-sync'
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
-import webpackConfig from './webpack.config.js'
+import webpackConfigCreate from './webpack.config.js'
 
 const browserSync = browserSyncCreate()
 
@@ -49,6 +47,8 @@ const markdownIt = new MarkdownIt({
   .use(markdownItFootnote)
   // add code highlight classes
   .use(markdownItPrism)
+
+const webpackConfig = webpackConfigCreate(process.env)
 
 // use bare numbers for footnote refs instead of wrapping in brackets
 markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
@@ -103,7 +103,7 @@ gulp.task('md', () =>
     .pipe(gulp.dest('dist'))
     .pipe(gulpFrontMatter({ property: 'data' }))
     .pipe(
-      // parse dist/manifest.json and return manifest data for use in templates:
+      // parse manifest.json and return manifest data for use in templates:
       //   {
       //     manifest: {
       //       'css/main.css': {
@@ -183,7 +183,7 @@ gulp.task('css', () =>
     .pipe(gulp.dest('dist'))
 )
 
-// compile javascript
+// task: compile javascript via webpack
 gulp.task('js', () =>
   gulp
     .src('src/js/index.js')
@@ -237,7 +237,7 @@ gulp.task('watch', () => {
 gulp.task('clean', () => del(['dist/**/*']))
 
 // task: build site
-gulp.task('build', gulp.series('fonts', 'images', 'css', 'js', 'md'))
+gulp.task('build', gulp.series('clean', 'fonts', 'images', 'css', 'js', 'md'))
 
 // task: develop
-gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'serve')))
+gulp.task('dev', gulp.series('build', gulp.parallel('watch', 'serve')))

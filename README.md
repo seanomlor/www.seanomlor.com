@@ -14,7 +14,7 @@
 - [x] fix notifier, colors not parsing in notifications area
 - [x] compile es6 javascript with import/exports
 - [x] eslint for webpack
-- [ ] production build for webpack
+- [x] production build for webpack
 - [ ] add contact form to templates/home.njk
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists

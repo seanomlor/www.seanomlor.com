@@ -1,6 +1,6 @@
-module.exports = {
-  devtool: 'eval',
-  mode: 'development',
+module.exports = env => ({
+  devtool: env.NODE_ENV === 'development' ? 'eval' : false,
+  mode: env.NODE_ENV,
   output: {
     filename: 'bundle.js',
   },
@@ -13,4 +13,4 @@ module.exports = {
       },
     ],
   },
-}
+})

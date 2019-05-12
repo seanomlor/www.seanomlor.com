@@ -4,8 +4,8 @@
   "description": "personal website",
   "main": "gulpfile.js",
   "scripts": {
-    "dev": "gulp dev",
-    "build": "gulp build & eleventy"
+    "dev": "NODE_ENV=development gulp dev",
+    "build": "NODE_ENV=production gulp build"
   },
   "author": "sean omlor",
   "license": "MIT",
