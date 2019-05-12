@@ -1,37 +1,42 @@
-const gulp = require('gulp')
-const gconcat = require('gulp-concat')
-const gdata = require('gulp-data')
-const geslint = require('gulp-eslint')
-const gfrontMatter = require('gulp-front-matter')
-const ghtmlhint = require('gulp-htmlhint')
-const gimagemin = require('gulp-imagemin')
-const gnewer = require('gulp-newer')
-const gnotify = require('gulp-notify')
-const gplumber = require('gulp-plumber')
-const gpostcss = require('gulp-postcss')
-const grename = require('gulp-rename')
-const grev = require('gulp-rev')
-const gsass = require('gulp-sass')
-const gsourcemaps = require('gulp-sourcemaps')
-const gstylelint = require('gulp-stylelint')
-const gtap = require('gulp-tap')
-const gterser = require('gulp-terser')
-const gutil = require('gulp-util')
-const gwrap = require('gulp-wrap')
-const _ = require('lodash')
-const autoprefixer = require('autoprefixer')
-const browserSync = require('browser-sync').create()
-const crypto = require('crypto')
-const del = require('del')
-const fs = require('fs')
-const MarkdownIt = require('markdown-it')
-const markdownItAttrs = require('markdown-it-attrs')
-const markdownItBracketedSpans = require('markdown-it-bracketed-spans')
-const markdownItFootnote = require('markdown-it-footnote')
-const markdownItPrism = require('markdown-it-prism')
-const path = require('path')
-const postcssClean = require('postcss-clean')
-const postcssReporter = require('postcss-reporter')
+'use strict'
+
+import _ from 'lodash'
+import autoprefixer from 'autoprefixer'
+import crypto from 'crypto'
+import del from 'del'
+import fs from 'fs'
+import gulp from 'gulp'
+import gulpData from 'gulp-data'
+import gulpEslint from 'gulp-eslint'
+import gulpFrontMatter from 'gulp-front-matter'
+import gulpHtmlhint from 'gulp-htmlhint'
+import gulpImagemin from 'gulp-imagemin'
+import gulpNewer from 'gulp-newer'
+import gulpNotify from 'gulp-notify'
+import gulpPlumber from 'gulp-plumber'
+import gulpPostcss from 'gulp-postcss'
+import gulpRename from 'gulp-rename'
+import gulpRev from 'gulp-rev'
+import gulpSass from 'gulp-sass'
+import gulpSourcemaps from 'gulp-sourcemaps'
+import gulpStylelint from 'gulp-stylelint'
+import gulpTap from 'gulp-tap'
+import gulpUtil from 'gulp-util'
+import gulpWrap from 'gulp-wrap'
+import MarkdownIt from 'markdown-it'
+import markdownItAttrs from 'markdown-it-attrs'
+import markdownItBracketedSpans from 'markdown-it-bracketed-spans'
+import markdownItFootnote from 'markdown-it-footnote'
+import markdownItPrism from 'markdown-it-prism'
+import path from 'path'
+import postcssClean from 'postcss-clean'
+import postcssReporter from 'postcss-reporter'
+import { create as browserSyncCreate } from 'browser-sync'
+import webpack from 'webpack'
+import webpackStream from 'webpack-stream'
+import webpackConfig from './webpack.config.js'
+
+const browserSync = browserSyncCreate()
 
 const markdownIt = new MarkdownIt({
   html: true,
@@ -56,11 +61,11 @@ markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
 // gulp-plumber handler to trigger notification and beep
 // function format to capture `this` ಠ_ಠ
 const errorHandler = function(err) {
-  gnotify.onError({
+  gulpNotify.onError({
     title: 'Gulp error in ' + err.plugin,
     message: err.messageOriginal || err.message,
   })(err)
-  gutil.beep()
+  gulpUtil.beep()
   this.emit('end')
 }
 
@@ -68,7 +73,7 @@ const errorHandler = function(err) {
 // see: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
 const sri = file => {
   const s = fs.readFileSync(file)
-  sha = crypto.createHash('sha384')
+  const sha = crypto.createHash('sha384')
   sha.update(s)
   return `sha384-${sha.digest('base64')}`
 }
@@ -77,7 +82,7 @@ const sri = file => {
 gulp.task('fonts', () =>
   gulp
     .src('src/fonts/**/*')
-    .pipe(gnewer('dist/fonts'))
+    .pipe(gulpNewer('dist/fonts'))
     .pipe(gulp.dest('dist/fonts'))
 )
 
@@ -85,8 +90,8 @@ gulp.task('fonts', () =>
 gulp.task('images', () =>
   gulp
     .src('src/images/**/*')
-    .pipe(gnewer('dist/images'))
-    .pipe(gimagemin())
+    .pipe(gulpNewer('dist/images'))
+    .pipe(gulpImagemin())
     .pipe(gulp.dest('dist/images'))
 )
 
@@ -96,9 +101,9 @@ gulp.task('images', () =>
 gulp.task('md', () =>
   gulp
     .src('src/content/**/*.md')
-    .pipe(gplumber({ errorHandler }))
+    .pipe(gulpPlumber({ errorHandler }))
     .pipe(gulp.dest('dist'))
-    .pipe(gfrontMatter({ property: 'data' }))
+    .pipe(gulpFrontMatter({ property: 'data' }))
     .pipe(
       // parse dist/manifest.json and return manifest data for use in templates:
       //   {
@@ -110,7 +115,7 @@ gulp.task('md', () =>
       //      ...
       //     }
       //   }
-      gdata(_file => ({
+      gulpData(_file => ({
         manifest: _.reduce(
           JSON.parse(fs.readFileSync('dist/manifest.json')),
           (accum, path, asset) => ({
@@ -126,15 +131,15 @@ gulp.task('md', () =>
     )
     .pipe(
       // convert markdown to html
-      gtap(file => {
+      gulpTap(file => {
         const result = markdownIt.render(file.contents.toString())
         file.contents = Buffer.from(result)
-        file.path = gutil.replaceExtension(file.path, '.html')
+        file.path = gulpUtil.replaceExtension(file.path, '.html')
         return file
       })
     )
     .pipe(
-      gwrap(
+      gulpWrap(
         // get template from layout attribute, default to index.njk
         data => {
           const template = `${path.parse(data.layout || 'page').name}.njk`
@@ -144,8 +149,8 @@ gulp.task('md', () =>
         { engine: 'nunjucks' }
       )
     )
-    .pipe(ghtmlhint())
-    .pipe(ghtmlhint.reporter('htmlhint-stylish'))
+    .pipe(gulpHtmlhint())
+    .pipe(gulpHtmlhint.reporter('htmlhint-stylish'))
     .pipe(gulp.dest('dist'))
 )
 
@@ -153,26 +158,26 @@ gulp.task('md', () =>
 gulp.task('css', () =>
   gulp
     .src('src/css/**/*.+(scss|css)')
-    .pipe(gplumber({ errorHandler }))
-    .pipe(gsass({ outputStyle: 'expanded' }))
+    .pipe(gulpPlumber({ errorHandler }))
+    .pipe(gulpSass({ outputStyle: 'expanded' }))
     .pipe(
-      gpostcss([
+      gulpPostcss([
         postcssReporter({ clearReportedMessages: true }),
         autoprefixer,
         postcssClean,
       ])
     )
     .pipe(
-      gstylelint({
+      gulpStylelint({
         failAfterError: false,
         reporters: [{ formatter: 'verbose', console: true }],
       })
     )
-    .pipe(grev())
+    .pipe(gulpRev())
     .pipe(gulp.dest('dist/css'))
-    .pipe(grename({ dirname: 'css' }))
+    .pipe(gulpRename({ dirname: 'css' }))
     .pipe(
-      grev.manifest('dist/manifest.json', {
+      gulpRev.manifest('dist/manifest.json', {
         base: 'dist',
         merge: true,
       })
@@ -183,19 +188,21 @@ gulp.task('css', () =>
 // compile javascript
 gulp.task('js', () =>
   gulp
-    .src('src/js/**/*.js')
-    .pipe(gplumber({ errorHandler }))
-    .pipe(gsourcemaps.init())
-    .pipe(gconcat('scripts.js'))
-    .pipe(geslint())
-    .pipe(geslint.format())
-    .pipe(gterser())
-    .pipe(grev())
-    .pipe(gsourcemaps.write('.'))
-    .pipe(gulp.dest('dist/js'))
-    .pipe(grename({ dirname: 'js' }))
+    .src('src/js/index.js')
+    .pipe(gulpPlumber({ errorHandler }))
+    .pipe(gulpSourcemaps.init())
     .pipe(
-      grev.manifest('dist/manifest.json', {
+      webpackStream(webpackConfig),
+      webpack
+    )
+    .pipe(gulpEslint())
+    // .pipe(gulpEslint.format())
+    .pipe(gulpRev())
+    .pipe(gulpSourcemaps.write('.'))
+    .pipe(gulp.dest('dist/js'))
+    .pipe(gulpRename({ dirname: 'js' }))
+    .pipe(
+      gulpRev.manifest('dist/manifest.json', {
         base: 'dist',
         merge: true,
       })
