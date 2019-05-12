@@ -20,6 +20,7 @@ const gutil = require('gulp-util')
 const gwrap = require('gulp-wrap')
 const autoprefixer = require('autoprefixer')
 const browserSync = require('browser-sync').create()
+const crypto = require('crypto')
 const del = require('del')
 const fs = require('fs')
 const MarkdownIt = require('markdown-it')
@@ -62,6 +63,15 @@ const errorHandler = function(err) {
   this.emit('end')
 }
 
+// get subresource integrity sha for given asset
+// see: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+const sri = file => {
+  const s = fs.readFileSync(file)
+  sha = crypto.createHash('sha384')
+  sha.update(s)
+  return `sha384-${sha.digest('base64')}`
+}
+
 // task: copy fonts
 gulp.task('fonts', () =>
   gulp
@@ -88,11 +98,27 @@ gulp.task('md', () =>
     .pipe(gplumber({ errorHandler }))
     .pipe(gulp.dest('dist'))
     .pipe(gfrontMatter({ property: 'data' }))
+    // include parsed manifest in data
     .pipe(
-      // include parsed manifest in data
-      gdata(_file => ({
-        assets: JSON.parse(fs.readFileSync('dist/manifest.json')),
-      }))
+      gdata(_file => {
+        // parse dist/manifest.json and return manifest data for use in templates:
+        //   {
+        //     manifest: {
+        //       'css/main.css': {
+        //         src: 'css/main-5da6bfc502.css',
+        //         integrity: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
+        //      },
+        //      ...
+        //     }
+        //   }
+        const manifest = JSON.parse(fs.readFileSync('dist/manifest.json'))
+        Object.keys(manifest).reduce((accum, key) => {
+          const src = accum[key]
+          accum[key] = { src, integrity: sri(`dist/${src}`) }
+          return accum
+        }, manifest)
+        return { manifest }
+      })
     )
     .pipe(
       // convert markdown to html
