@@ -1,5 +1,35 @@
 # www.seanomlor.com
 
+## Features:
+
+- [Development server](https://www.browsersync.io)
+- [Nunjucks](https://mozilla.github.io/nunjucks) templates
+- Markdown to HTML
+  - [Front Matter](https://jekyllrb.com/docs/front-matter)
+    - Title
+    - Layout
+  - [Code syntax highlighting](https://prismjs.com)
+  - [Footnotes](https://www.markdownguide.org/extended-syntax/#footnotes)
+  - [Custom sidenotes](src/js/sidenotes.js)
+  - [Bracketed spans](https://pandoc.org/MANUAL.html#extension-bracketed_spans)
+  - [Attributes](https://www.npmjs.com/package/markdown-it-attrs)
+- ES2015 bundling
+  - [Module resolution](https://webpack.js.org)
+  - [Compilation](https://babeljs.io)
+  - Dev sourcemaps
+  - Optimized production builds
+- [Sass compilation](https://github.com/postcss/postcss)
+  - [Autoprefixer](https://github.com/postcss/autoprefixer)
+  - [Minification](https://github.com/leodido/postcss-clean)
+- [Image optimization](https://github.com/imagemin/imagemin)
+- Fingerprinted assets with `manifest.json`
+- [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+- Linting
+  - [HTMLHint](https://htmlhint.io)
+  - [ESLint](https://eslint.org)
+  - [stylelint](https://github.com/stylelint/stylelint)
+- [Deployment](https://rsync.samba.org)
+
 ## TODO:
 - [x] add js sourcemaps
 - [x] copy original markdown to `dist` as `<page>.md`
@@ -23,9 +53,19 @@
   - [ ] resume
   - [ ] resume pdf (src/media)
   - [ ] contact (anchor to home#contact for now)
+  - [ ] favicon (generator?)
+  - [ ] robots.txt
+  - [ ] keybase.txt
+  - [ ] add date modified
+    ```html
+    <time itemprop="dateModified" datetime="2017-03-20">
+      March 20th, 2017
+    </time>
+    ```
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart?
 - [ ] launch v1
 - [ ] add first draft of about me page
+- [ ] consider indieweb: https://indiewebify.me
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
 - [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
