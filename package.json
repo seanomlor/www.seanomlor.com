@@ -40,7 +40,6 @@
     "gulp-stylelint": "^9.0.0",
     "gulp-tap": "^1.0.1",
     "gulp-uglify": "^3.0.2",
-    "gulp-util": "^3.0.8",
     "gulp-wrap": "^0.15.0",
     "htmlhint-stylish": "^1.0.3",
     "lodash": "^4.17.11",

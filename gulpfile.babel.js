@@ -19,7 +19,6 @@ import gulpRsync from 'gulp-rsync'
 import gulpSass from 'gulp-sass'
 import gulpStylelint from 'gulp-stylelint'
 import gulpTap from 'gulp-tap'
-import gulpUtil from 'gulp-util'
 import gulpWrap from 'gulp-wrap'
 import inquirer from 'inquirer'
 import MarkdownIt from 'markdown-it'
@@ -60,14 +59,13 @@ markdownIt.renderer.rules.footnote_caption = (tokens, idx) => {
   return tokens[idx].meta.subId > 0 ? n + ':' + tokens[idx].meta.subId : n
 }
 
-// gulp-plumber handler to trigger notification and beep
-// function format to capture `this` ಠ_ಠ
+// gulp-plumber error handler to trigger system notification
+// note: need `this` to emit end ಠ_ಠ
 const errorHandler = function(err) {
   gulpNotify.onError({
     title: 'Gulp error in ' + err.plugin,
     message: err.messageOriginal || err.message,
   })(err)
-  gulpUtil.beep()
   this.emit('end')
 }
 
@@ -136,7 +134,7 @@ gulp.task('md', () =>
       gulpTap(file => {
         const result = markdownIt.render(file.contents.toString())
         file.contents = Buffer.from(result)
-        file.path = gulpUtil.replaceExtension(file.path, '.html')
+        file.extname = '.html'
         return file
       })
     )

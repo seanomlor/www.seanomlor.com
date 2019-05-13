@@ -16,9 +16,16 @@
 - [x] eslint for webpack
 - [x] production build for webpack
 - [x] deploy task
-- [ ] replace deprecated gulp-util
-      https://medium.com/gulpjs/gulp-util-ca3b1f9f9ac5
-- [ ] add contact form to templates/home.njk
+- [x] replace deprecated gulp-util
+- [ ] finish porting existing pages
+  - [ ] home
+    - [ ] add contact form to templates/home.njk
+  - [ ] resume
+  - [ ] resume pdf (src/media)
+  - [ ] contact (anchor to home#contact for now)
 - [ ] download latest fira code fonts to src/fonts instead of cdn
+- [ ] deploy with an nginx conf / restart?
+- [ ] launch v1
+- [ ] add first draft of about me page
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
 - [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
