@@ -47,9 +47,10 @@
 - [x] production build for webpack
 - [x] deploy task
 - [x] replace deprecated gulp-util
+- [x] test drive prepack build size
 - [ ] finish porting existing pages
-  - [ ] home
-    - [ ] add contact form to templates/home.njk
+  - [x] home
+    - [x] add contact form to templates/home.njk
   - [ ] resume
   - [ ] resume pdf (src/media)
   - [ ] contact (anchor to home#contact for now)
@@ -69,3 +70,4 @@
 - [ ] consider indieweb: https://indiewebify.me
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
 - [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
+- [ ] something to "like" or heart posts

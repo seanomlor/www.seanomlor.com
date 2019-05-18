@@ -7,6 +7,7 @@ import gulp from 'gulp'
 import gulpData from 'gulp-data'
 import gulpFrontMatter from 'gulp-front-matter'
 import gulpHtmlhint from 'gulp-htmlhint'
+import gulpIf from 'gulp-if'
 import gulpImagemin from 'gulp-imagemin'
 import gulpNewer from 'gulp-newer'
 import gulpNoop from 'gulp-noop'
@@ -40,6 +41,8 @@ const browserSync = browserSyncCreate()
 const markdownIt = new MarkdownIt({
   html: true,
 })
+  // disable indentation-based code blocks
+  .disable(['code'])
   // support spans via brackets
   // e.g. `hello [foo] bar` => `hello <span>foo</span> bar`
   .use(markdownItBracketedSpans)
@@ -100,21 +103,18 @@ gulp.task('images', () =>
 // 2. compile markdown to html with nunjucks template
 gulp.task('md', () =>
   gulp
-    .src('src/content/**/*.md')
+    .src('src/content/**/*.md?(.njk)')
     .pipe(gulpPlumber({ errorHandler }))
-    .pipe(gulp.dest('dist'))
+    // parse frontmatter into data attribute
     .pipe(gulpFrontMatter({ property: 'data' }))
+    // parse manifest.json into data.manifest attribute
+    //   {
+    //     'css/main.css': {
+    //       path: '/css/main-5da6bfc502.css',
+    //       hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
+    //    },
+    //    ...
     .pipe(
-      // parse manifest.json and return manifest data for use in templates:
-      //   {
-      //     manifest: {
-      //       'css/main.css': {
-      //         path: '/css/main-5da6bfc502.css',
-      //         hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
-      //      },
-      //      ...
-      //     }
-      //   }
       gulpData(_file => ({
         manifest: _.reduce(
           JSON.parse(fs.readFileSync('dist/manifest.json')),
@@ -129,8 +129,28 @@ gulp.task('md', () =>
         ),
       }))
     )
+    // pre-process *.md.njk as nunjucks
     .pipe(
-      // convert markdown to html
+      gulpIf(
+        file => file.extname === '.njk',
+        gulpWrap(data => data.file.contents.toString(), null, {
+          engine: 'nunjucks',
+        })
+      )
+    )
+    // remove .njk extensions
+    .pipe(
+      gulpRename(path => {
+        if (path.extname === '.njk') {
+          path.extname = '.md'
+          path.basename = path.basename.split('.md')[0]
+        }
+      })
+    )
+    // copy markdown as-is to dist now
+    .pipe(gulp.dest('dist'))
+    // convert markdown to html
+    .pipe(
       gulpTap(file => {
         const result = markdownIt.render(file.contents.toString())
         file.contents = Buffer.from(result)
@@ -138,9 +158,9 @@ gulp.task('md', () =>
         return file
       })
     )
+    // wrap with nunjucks template from data.layout, default index.njk
     .pipe(
       gulpWrap(
-        // get template from layout attribute, default to index.njk
         data => {
           const template = `${path.parse(data.layout || 'page').name}.njk`
           return fs.readFileSync(`src/templates/${template}`).toString()
@@ -227,7 +247,7 @@ gulp.task('reload', done => {
 
 // task: watch src, trigger build and reload
 gulp.task('watch', () => {
-  gulp.watch('src/content/**/*.md', gulp.series('md', 'reload'))
+  gulp.watch('src/content/**/*.md?(.njk)', gulp.series('md', 'reload'))
   gulp.watch('src/css/**/*.scss', gulp.series('css', 'md', 'reload'))
   gulp.watch('src/fonts/**/*', gulp.series('fonts', 'reload'))
   gulp.watch('src/images/**/*', gulp.series('images', 'reload'))
