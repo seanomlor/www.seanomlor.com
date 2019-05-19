@@ -51,8 +51,9 @@
 - [ ] finish porting existing pages
   - [x] home
     - [x] add contact form to templates/home.njk
-  - [ ] resume
-  - [ ] resume pdf (src/media)
+  - [x] resume
+    - [ ] resume minimal version w/out header, footer, sidebars
+    - [ ] resume pdf (src/media)
   - [ ] contact (anchor to home#contact for now)
   - [ ] favicon (generator?)
   - [ ] robots.txt
@@ -63,6 +64,11 @@
       March 20th, 2017
     </time>
     ```
+- [ ] axe nav for v1 launch?
+- [ ] highlight nav of currently active page
+- [ ] add an id to the body of layout with name of page?
+      resume/index.md => id="resume"
+      resume/foo.md   => id="resume-foo"
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart?
 - [ ] launch v1

@@ -112,6 +112,7 @@ h3 {
   line-height: 1.5em;
   text-transform: uppercase;
   font-weight: 700;
+  border-bottom: 3px solid;
 }
 
 a {
@@ -140,6 +141,7 @@ footer[role='contentinfo'] {
 header[role='banner'] {
   grid-area: header;
   border-bottom: 1px solid $color-grey;
+  margin-bottom: 10px;
   padding-bottom: 10px;
   padding-top: 20px;
 
@@ -190,6 +192,11 @@ header[role='banner'] {
 
 main[role='main'] {
   grid-area: content;
+
+  h1:first-child {
+    padding-top: 0;
+    margin-top: 0;
+  }
 }
 
 aside#left,
@@ -356,6 +363,10 @@ img.avatar {
 }
 
 .contact {
+  .row {
+    margin-bottom: 20px;
+  }
+
   .left input {
     margin: 0 20px 20px 0;
   }
@@ -397,11 +408,27 @@ input[type='submit'] {
   color: $color-white;
   display: block;
   margin: 10px auto;
-  padding: 10px 20px;
+  padding: 12px 25px;
   width: inherit;
 
   &:hover {
     cursor: pointer;
     background: darken($color-red, 5%);
   }
+}
+
+h1.resume {
+  margin: 0;
+  padding: 0;
+}
+
+h2.resume {
+  margin: 0;
+  padding: 0;
+}
+
+p.resume {
+  color: $color-red;
+  margin-top: 0;
+  padding-top: 0;
 }
