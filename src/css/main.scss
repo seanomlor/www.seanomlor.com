@@ -1,9 +1,9 @@
 $color-black: #333;
 $color-white: #fffefd;
-// $color-white: #fffff8;
 $color-grey: #6c6c6c;
 $color-light: #afafba;
 $color-blue: #109cd9;
+$color-red: #d12812;
 $color-highlight: #fcfaf5;
 $grid-column-aside: 300;
 $grid-gap: 10;
@@ -255,6 +255,7 @@ img.avatar {
   display: block;
   font-size: 1rem;
   font-weight: 300;
+  clear: both;
 }
 
 #sidenotes-left .sidenote-number {
@@ -352,4 +353,55 @@ img.avatar {
 
 .ordn {
   font-feature-settings: 'ordn';
+}
+
+.contact {
+  .left input {
+    margin: 0 20px 20px 0;
+  }
+
+  .left input:last-child {
+    margin-bottom: 0;
+  }
+
+  textarea {
+    height: 100%;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  flex: 1;
+}
+
+input,
+textarea {
+  border-radius: 2px;
+  border: 1px solid $color-grey;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+input[type='submit'] {
+  background: $color-red;
+  border: none;
+  color: $color-white;
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  width: inherit;
+
+  &:hover {
+    cursor: pointer;
+    background: darken($color-red, 5%);
+  }
 }

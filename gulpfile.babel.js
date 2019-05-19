@@ -24,6 +24,7 @@ import gulpWrap from 'gulp-wrap'
 import inquirer from 'inquirer'
 import MarkdownIt from 'markdown-it'
 import markdownItAttrs from 'markdown-it-attrs'
+import markdownItNamedHeadings from 'markdown-it-named-headings'
 import markdownItBracketedSpans from 'markdown-it-bracketed-spans'
 import markdownItFootnote from 'markdown-it-footnote'
 import markdownItPrism from 'markdown-it-prism'
@@ -46,6 +47,8 @@ const markdownIt = new MarkdownIt({
   // support spans via brackets
   // e.g. `hello [foo] bar` => `hello <span>foo</span> bar`
   .use(markdownItBracketedSpans)
+  // automatically add ids to heading tags
+  .use(markdownItNamedHeadings)
   // support markdown styles
   // e.g. `# hello {.red}` => `<h1 class="red">hello</h1>`
   .use(markdownItAttrs)
