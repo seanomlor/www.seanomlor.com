@@ -56,9 +56,8 @@
     - [x] add testimonials
   - [x] contact
   - [x] resume
-    - [ ] resume minimal version w/out header, footer, sidebars
-    - [ ] resume pdf (src/media)
-  - [ ] favicon (generator?)
+    - [x] resume pdf (src/media)
+  - [ ] favicon
   - [ ] robots.txt
   - [ ] keybase.txt
   - [ ] add date modified
@@ -68,6 +67,7 @@
     </time>
     ```
 - [ ] launch v1
+- [ ] favicon generator?
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart?
 - [ ] add first draft of about me page

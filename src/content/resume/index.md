@@ -2,7 +2,7 @@
 title: 'Resume'
 ---
 
-# Sean Omlor - Resume {.resume}
+# Sean Omlor - Resume [<i class="fas fa-print"></i>](/media/sean-omlor-resume.pdf) {.resume}
 ## Elixir and JavaScript Web Developer {.resume}
 www.seanomlor.com — somlor@gmail.com — 215-317-0255 {.resume}
 

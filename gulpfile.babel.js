@@ -101,6 +101,14 @@ gulp.task('images', () =>
     .pipe(gulp.dest('dist/images'))
 )
 
+// task: copy media
+gulp.task('media', () =>
+  gulp
+    .src('src/media/**/*')
+    .pipe(gulpNewer('dist/media'))
+    .pipe(gulp.dest('dist/media'))
+)
+
 // task:
 // 1. copy raw markdown
 // 2. compile markdown to html with nunjucks template
@@ -278,6 +286,7 @@ gulp.task('watch', () => {
   gulp.watch('src/fonts/**/*', gulp.series('fonts', 'reload'))
   gulp.watch('src/images/**/*', gulp.series('images', 'reload'))
   gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
+  gulp.watch('src/media/**/*', gulp.series('media', 'reload'))
   gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))
 })
 
@@ -285,7 +294,10 @@ gulp.task('watch', () => {
 gulp.task('clean', () => del(['dist/**/*']))
 
 // task: build site
-gulp.task('build', gulp.series('clean', 'fonts', 'images', 'css', 'js', 'md'))
+gulp.task(
+  'build',
+  gulp.series('clean', 'fonts', 'images', 'media', 'css', 'js', 'md')
+)
 
 // task: deploy via rsync
 gulp.task('deploy:rsync', done => {
