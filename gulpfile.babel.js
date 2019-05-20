@@ -108,30 +108,6 @@ gulp.task('md', () =>
   gulp
     .src('src/content/**/*.md?(.njk)')
     .pipe(gulpPlumber({ errorHandler }))
-    // parse frontmatter into data attribute
-    .pipe(gulpFrontMatter({ property: 'data' }))
-    // parse manifest.json into data.manifest attribute
-    //   {
-    //     'css/main.css': {
-    //       path: '/css/main-5da6bfc502.css',
-    //       hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
-    //    },
-    //    ...
-    .pipe(
-      gulpData(_file => ({
-        manifest: _.reduce(
-          JSON.parse(fs.readFileSync('dist/manifest.json')),
-          (accum, path, asset) => ({
-            ...accum,
-            [asset]: {
-              path: `/${path}`,
-              hash: sri(`dist/${path}`),
-            },
-          }),
-          {}
-        ),
-      }))
-    )
     // pre-process *.md.njk as nunjucks
     .pipe(
       gulpIf(
@@ -154,11 +130,36 @@ gulp.task('md', () =>
     .pipe(gulp.dest('dist'))
     // change extension to html
     .pipe(gulpRename({ extname: '.html' }))
-    // add relative path to data, removing index.html suffix
-    //  - '/index.html'       -> '/'
-    //  - '/about/index.html' -> '/about'
+    // parse frontmatter into data attribute
+    .pipe(gulpFrontMatter({ property: 'data' }))
+    /*
+      merge additional keys into data attribute:
+
+        1. manifest: parse manifest.json into data.manifest attribute
+          'css/main.css': {
+            path: '/css/main-5da6bfc502.css',
+            hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
+          },
+          ...
+
+        2. path: add relative path to data, removing index.html suffix
+          - '/index.html'     -> '/'
+          - '/foo/index.html' -> '/foo'
+
+    */
     .pipe(
       gulpData(file => ({
+        manifest: _.reduce(
+          JSON.parse(fs.readFileSync('dist/manifest.json')),
+          (accum, path, asset) => ({
+            ...accum,
+            [asset]: {
+              path: `/${path}`,
+              hash: sri(`dist/${path}`),
+            },
+          }),
+          {}
+        ),
         path: path
           .join('/', path.relative(`${__dirname}/dist`, file.path))
           .replace(/^\/index.html$/, '/')
