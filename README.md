@@ -49,14 +49,15 @@
 - [x] replace deprecated gulp-util
 - [x] test drive prepack build size
 - [x] highlight nav of currently active page
+- [x] add an id to the body of layout with name of page
 - [ ] finish porting existing pages
   - [x] home
     - [x] add contact form to templates/home.njk
     - [x] add testimonials
+  - [x] contact
   - [x] resume
     - [ ] resume minimal version w/out header, footer, sidebars
     - [ ] resume pdf (src/media)
-  - [ ] contact (anchor to home#contact for now)
   - [ ] favicon (generator?)
   - [ ] robots.txt
   - [ ] keybase.txt
@@ -66,12 +67,9 @@
       March 20th, 2017
     </time>
     ```
-- [ ] add an id to the body of layout with name of page?
-      resume/index.md => id="resume"
-      resume/foo.md   => id="resume-foo"
+- [ ] launch v1
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart?
-- [ ] launch v1
 - [ ] add first draft of about me page
 - [ ] consider indieweb: https://indiewebify.me
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists

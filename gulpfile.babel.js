@@ -135,20 +135,30 @@ gulp.task('md', () =>
     /*
       merge additional keys into data attribute:
 
-        1. manifest: parse manifest.json into data.manifest attribute
+        1. id: page id
+          - 'index.html'      -> 'index'
+          - 'foo/index.html'  -> 'foo--index'
+          - 'foo/bar.html'    -> 'foo--bar'
+          - 'foo/bar/baz.html' -> 'foo--bar--baz'
+
+        2. manifest: parse manifest.json into data.manifest attribute
           'css/main.css': {
             path: '/css/main-5da6bfc502.css',
             hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
           },
           ...
 
-        2. path: add relative path to data, removing index.html suffix
-          - '/index.html'     -> '/'
-          - '/foo/index.html' -> '/foo'
+        3. path: add relative path to data, removing index.html suffix
+          - 'index.html'     -> '/'
+          - 'foo/index.html' -> '/foo'
 
     */
     .pipe(
       gulpData(file => ({
+        id: path
+          .relative(`${__dirname}/dist`, file.path)
+          .replace(/\//, '--')
+          .replace(/\.html$/, ''),
         manifest: _.reduce(
           JSON.parse(fs.readFileSync('dist/manifest.json')),
           (accum, path, asset) => ({
