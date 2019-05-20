@@ -51,6 +51,7 @@
 - [ ] finish porting existing pages
   - [x] home
     - [x] add contact form to templates/home.njk
+    - [x] add testimonials
   - [x] resume
     - [ ] resume minimal version w/out header, footer, sidebars
     - [ ] resume pdf (src/media)

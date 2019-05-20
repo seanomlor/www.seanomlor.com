@@ -333,7 +333,7 @@ img.avatar {
   header[role='banner'],
   main[role='main'],
   footer[role='contentinfo'] {
-    margin: 0 auto;
+    margin: 0 auto 10px;
   }
 
   header[role='banner'],
@@ -431,4 +431,40 @@ p.resume {
   color: $color-red;
   margin-top: 0;
   padding-top: 0;
+}
+
+.testimonial {
+  background-color: $color-highlight;
+  border: 1px dotted $color-light;
+  border-radius: 3px;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: 120px autofill;
+  grid-template-areas:
+    't_avatar  t_content'
+    't_author t_author';
+  margin: 10px 0;
+  padding: 20px;
+
+  p {
+    margin: 0;
+
+    img {
+      border-radius: 60px;
+      width: 120px;
+    }
+
+    &:first-child {
+      grid-area: t_avatar;
+    }
+
+    &:nth-child(2) {
+      grid-area: t_content;
+    }
+
+    &:last-child {
+      grid-area: t_author;
+      text-align: right;
+    }
+  }
 }
