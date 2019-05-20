@@ -57,9 +57,9 @@
   - [x] contact
   - [x] resume
     - [x] resume pdf (src/media)
-  - [ ] favicon
-  - [ ] robots.txt
-  - [ ] keybase.txt
+  - [x] favicon
+  - [x] robots.txt
+  - [x] keybase.txt
   - [ ] add date modified
     ```html
     <time itemprop="dateModified" datetime="2017-03-20">

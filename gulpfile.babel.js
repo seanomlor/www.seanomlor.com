@@ -101,12 +101,21 @@ gulp.task('images', () =>
     .pipe(gulp.dest('dist/images'))
 )
 
-// task: copy media
-gulp.task('media', () =>
-  gulp
-    .src('src/media/**/*')
-    .pipe(gulpNewer('dist/media'))
-    .pipe(gulp.dest('dist/media'))
+// task: copy txt, ico files and media folder
+gulp.task(
+  'media',
+  gulp.parallel(
+    () =>
+      gulp
+        .src('src/media/**/*')
+        .pipe(gulpNewer('dist/media'))
+        .pipe(gulp.dest('dist/media')),
+    () =>
+      gulp
+        .src('src/**/*.+(txt|ico)')
+        .pipe(gulpNewer('dist'))
+        .pipe(gulp.dest('dist'))
+  )
 )
 
 // task:
@@ -286,7 +295,10 @@ gulp.task('watch', () => {
   gulp.watch('src/fonts/**/*', gulp.series('fonts', 'reload'))
   gulp.watch('src/images/**/*', gulp.series('images', 'reload'))
   gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
-  gulp.watch('src/media/**/*', gulp.series('media', 'reload'))
+  gulp.watch(
+    ['src/media/**/*', 'src/**/*.+(txt|ico)'],
+    gulp.series('media', 'reload')
+  )
   gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))
 })
 
