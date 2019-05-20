@@ -48,6 +48,7 @@
 - [x] deploy task
 - [x] replace deprecated gulp-util
 - [x] test drive prepack build size
+- [x] highlight nav of currently active page
 - [ ] finish porting existing pages
   - [x] home
     - [x] add contact form to templates/home.njk
@@ -65,8 +66,6 @@
       March 20th, 2017
     </time>
     ```
-- [ ] axe nav for v1 launch?
-- [ ] highlight nav of currently active page
 - [ ] add an id to the body of layout with name of page?
       resume/index.md => id="resume"
       resume/foo.md   => id="resume-foo"

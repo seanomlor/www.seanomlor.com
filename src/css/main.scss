@@ -178,6 +178,12 @@ header[role='banner'] {
   nav {
     clear: both;
 
+    span {
+      border-bottom: 1px solid $color-grey;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
     a {
       color: $color-black;
       border-bottom: none;

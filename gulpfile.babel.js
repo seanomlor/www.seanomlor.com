@@ -152,12 +152,24 @@ gulp.task('md', () =>
     )
     // copy markdown as-is to dist now
     .pipe(gulp.dest('dist'))
+    // change extension to html
+    .pipe(gulpRename({ extname: '.html' }))
+    // add relative path to data, removing index.html suffix
+    //  - '/index.html'       -> '/'
+    //  - '/about/index.html' -> '/about'
+    .pipe(
+      gulpData(file => ({
+        path: path
+          .join('/', path.relative(`${__dirname}/dist`, file.path))
+          .replace(/^\/index.html$/, '/')
+          .replace(/\/index.html$/, ''),
+      }))
+    )
     // convert markdown to html
     .pipe(
       gulpTap(file => {
         const result = markdownIt.render(file.contents.toString())
         file.contents = Buffer.from(result)
-        file.extname = '.html'
         return file
       })
     )

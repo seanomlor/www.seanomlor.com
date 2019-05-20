@@ -56,11 +56,19 @@
         </a>
       </div>
 
+      {% macro navLink(name, path) %}
+        {% if path == file.data.path %}
+          <span>{{ name }}</span>
+        {% else %}
+          <a href="{{ path }}">{{ name }}</a>
+        {% endif %}
+      {% endmacro %}
+
       <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/resume">Resume</a>
-        <a href="/contact">Contact</a>
+        {{ navLink('Home', '/') }}
+        {{ navLink('About', '/about') }}
+        {{ navLink('Resume', '/resume') }}
+        {{ navLink('Contact', '/contact') }}
       </nav>
     </header>
 
