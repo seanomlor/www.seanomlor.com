@@ -165,7 +165,7 @@ gulp.task('md', () =>
     .pipe(
       gulpWrap(
         data => {
-          const template = `${path.parse(data.layout || 'page').name}.njk`
+          const template = `${path.parse(data.layout || 'default').name}.njk`
           return fs.readFileSync(`src/templates/${template}`).toString()
         },
         null,
