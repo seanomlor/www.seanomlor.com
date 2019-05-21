@@ -50,7 +50,7 @@
 - [x] test drive prepack build size
 - [x] highlight nav of currently active page
 - [x] add an id to the body of layout with name of page
-- [ ] finish porting existing pages
+- [x] finish porting existing pages
   - [x] home
     - [x] add contact form to templates/home.njk
     - [x] add testimonials
@@ -60,17 +60,14 @@
   - [x] favicon
   - [x] robots.txt
   - [x] keybase.txt
-  - [ ] add date modified
-    ```html
-    <time itemprop="dateModified" datetime="2017-03-20">
-      March 20th, 2017
-    </time>
-    ```
-- [ ] launch v1
-- [ ] favicon generator?
-- [ ] download latest fira code fonts to src/fonts instead of cdn
-- [ ] deploy with an nginx conf / restart?
+  - [x] add date modified
 - [ ] add first draft of about me page
+- [ ] change favicon to a ghost
+- [ ] favicon generation?
+- [ ] launch v1
+- [ ] pdf generation
+- [ ] download latest fira code fonts to src/fonts instead of cdn
+- [ ] deploy with an nginx conf / restart
 - [ ] consider indieweb: https://indiewebify.me
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
 - [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes

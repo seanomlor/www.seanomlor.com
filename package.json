@@ -19,6 +19,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.5",
+    "dayjs": "^1.8.14",
     "del": "^4.1.1",
     "directory-tree": "^2.2.2",
     "eslint": "^5.16.0",

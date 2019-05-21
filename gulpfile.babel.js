@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import autoprefixer from 'autoprefixer'
 import crypto from 'crypto'
+import dayjs from 'dayjs'
 import del from 'del'
 import fs from 'fs'
 import gulp from 'gulp'
@@ -125,6 +126,23 @@ gulp.task('md', () =>
   gulp
     .src('src/content/**/*.md?(.njk)')
     .pipe(gulpPlumber({ errorHandler }))
+    // parse frontmatter into data attribute
+    .pipe(gulpFrontMatter({ property: 'data' }))
+    // add info about file
+    .pipe(
+      gulpData(file => {
+        const stats = fs.statSync(file.path)
+        const createdAt = dayjs(stats.birthtime)
+        const updatedAt = dayjs(stats.mtime)
+
+        return {
+          createdAt: createdAt.toISOString(),
+          createdAtDisplay: createdAt.format('MMMM D, YYYY [at] h:mma'),
+          updatedAt: updatedAt.toISOString(),
+          updatedAtDisplay: updatedAt.format('MMMM D, YYYY [at] h:mma'),
+        }
+      })
+    )
     // pre-process *.md.njk as nunjucks
     .pipe(
       gulpIf(
@@ -147,8 +165,6 @@ gulp.task('md', () =>
     .pipe(gulp.dest('dist'))
     // change extension to html
     .pipe(gulpRename({ extname: '.html' }))
-    // parse frontmatter into data attribute
-    .pipe(gulpFrontMatter({ property: 'data' }))
     /*
       merge additional keys into data attribute:
 
@@ -176,6 +192,7 @@ gulp.task('md', () =>
           .relative(`${__dirname}/dist`, file.path)
           .replace(/\//, '--')
           .replace(/\.html$/, ''),
+        // date: fs.statSync(file.path).birthtime,
         manifest: _.reduce(
           JSON.parse(fs.readFileSync('dist/manifest.json')),
           (accum, path, asset) => ({
