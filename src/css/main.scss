@@ -258,6 +258,10 @@ footer[role='contentinfo'] {
       border-bottom: 2px solid;
     }
   }
+
+  .page-meta {
+    float: left;
+  }
 }
 
 .footnote-ref a {
@@ -390,24 +394,6 @@ img.avatar {
   font-feature-settings: 'ordn';
 }
 
-.contact {
-  .row {
-    margin-bottom: 20px;
-  }
-
-  .left input {
-    margin: 0 20px 20px 0;
-  }
-
-  .left input:last-child {
-    margin-bottom: 0;
-  }
-
-  textarea {
-    height: 100%;
-  }
-}
-
 .row {
   display: flex;
   flex-direction: row;
@@ -426,6 +412,7 @@ input,
 textarea {
   border-radius: 2px;
   border: 1px solid $color-grey;
+  box-sizing: border-box;
   font-size: 1rem;
   padding: 10px;
 }
@@ -467,9 +454,8 @@ p.resume {
   border-radius: 3px;
   display: grid;
   grid-gap: 15px;
-  grid-template-columns: 120px autofill;
   grid-template-areas:
-    't_avatar  t_content'
+    't_avatar t_content'
     't_author t_author';
   margin: 10px 0;
   padding: 20px;
@@ -477,13 +463,13 @@ p.resume {
   p {
     margin: 0;
 
-    img {
-      border-radius: 60px;
-      width: 120px;
-    }
-
     &:first-child {
       grid-area: t_avatar;
+
+      img {
+        border-radius: 100%;
+        width: 120px;
+      }
     }
 
     &:nth-child(2) {
@@ -497,6 +483,78 @@ p.resume {
   }
 }
 
-.page-meta {
-  float: left;
+.contact {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-areas:
+    'c_info c_message'
+    'c_send c_send';
+
+  .contact--info {
+    grid-area: c_info;
+
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .contact--message {
+    grid-area: c_message;
+
+    textarea {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .contact--send {
+    grid-area: c_send;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 1em;
+  }
+
+  footer[role='contentinfo'] {
+    font-size: 0.85rem;
+    text-align: left;
+    .page-meta {
+      float: none;
+    }
+  }
+
+  .contact {
+    grid-template-areas:
+      'c_info c_info'
+      'c_message c_message'
+      'c_send c_send';
+
+    input,
+    textarea {
+      font-size: 0.85rem;
+    }
+  }
+
+  .testimonial {
+    grid-template-areas:
+      't_avatar t_avatar'
+      't_content t_content'
+      't_author t_author';
+
+    p {
+      &:first-child {
+        text-align: center;
+        img {
+          border: 1px solid $color-black;
+        }
+      }
+    }
+  }
 }

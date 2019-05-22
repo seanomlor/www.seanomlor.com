@@ -145,9 +145,9 @@ gulp.task('md', () =>
 
         return {
           createdAt: createdAt.toISOString(),
-          createdAtDisplay: createdAt.format('MMMM D, YYYY [at] h:mma'),
+          createdAtDisplay: createdAt.format('MMMM D, YYYY h:mma'),
           updatedAt: updatedAt.toISOString(),
-          updatedAtDisplay: updatedAt.format('MMMM D, YYYY [at] h:mma'),
+          updatedAtDisplay: updatedAt.format('MMMM D, YYYY h:mma'),
         }
       })
     )
