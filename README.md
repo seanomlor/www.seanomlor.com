@@ -62,6 +62,8 @@
   - [x] keybase.txt
   - [x] add date modified
 - [x] change favicon to a ghost
+- [ ] fix sri through cloudflare :/
+- [ ] fix mobile-view bunching
 - [ ] add first draft of about me page
 - [ ] favicon generation?
 - [ ] launch v1
