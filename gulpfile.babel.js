@@ -103,6 +103,14 @@ gulp.task('images', () =>
 )
 
 // task: copy txt, ico files and media folder
+const rootMediaGlobs = [
+  'src/*.ico',
+  'src/*.txt',
+  'src/android-*.png',
+  'src/apple-*.png',
+  'src/favicon-*.png',
+  'src/site.webmanifest',
+]
 gulp.task(
   'media',
   gulp.parallel(
@@ -113,7 +121,7 @@ gulp.task(
         .pipe(gulp.dest('dist/media')),
     () =>
       gulp
-        .src('src/**/*.+(txt|ico)')
+        .src(rootMediaGlobs)
         .pipe(gulpNewer('dist'))
         .pipe(gulp.dest('dist'))
   )
@@ -293,7 +301,10 @@ gulp.task('serve', () =>
     callbacks: {
       ready: (_err, bs) => {
         // serve *.md files as text/plain
-        bs.utils.serveStatic.mime.define({ 'text/plain': ['md'] })
+        bs.utils.serveStatic.mime.define({
+          'text/plain': ['md'],
+          'application/manifest+json': ['webmanifest'],
+        })
       },
     },
   })
@@ -313,7 +324,7 @@ gulp.task('watch', () => {
   gulp.watch('src/images/**/*', gulp.series('images', 'reload'))
   gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
   gulp.watch(
-    ['src/media/**/*', 'src/**/*.+(txt|ico)'],
+    rootMediaGlobs.concat(['src/media/**/*']),
     gulp.series('media', 'reload')
   )
   gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))

@@ -61,14 +61,17 @@
   - [x] robots.txt
   - [x] keybase.txt
   - [x] add date modified
+- [x] change favicon to a ghost
 - [ ] add first draft of about me page
-- [ ] change favicon to a ghost
 - [ ] favicon generation?
 - [ ] launch v1
 - [ ] pdf generation
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart
 - [ ] consider indieweb: https://indiewebify.me
+- [ ] add article json-ld
+      figure out how to nest json-ld, e.g. creator of article is entire person.json
+      https://www.fabian-keller.de/blog/adding-json-ld-to-a-personal-website
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
 - [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
 - [ ] something to "like" or heart posts
