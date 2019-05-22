@@ -51,22 +51,12 @@
 - [x] highlight nav of currently active page
 - [x] add an id to the body of layout with name of page
 - [x] finish porting existing pages
-  - [x] home
-    - [x] add contact form to templates/home.njk
-    - [x] add testimonials
-  - [x] contact
-  - [x] resume
-    - [x] resume pdf (src/media)
-  - [x] favicon
-  - [x] robots.txt
-  - [x] keybase.txt
-  - [x] add date modified
 - [x] change favicon to a ghost
+- [x] launch v1
+- [x] fix mobile-view bunching
 - [ ] fix sri through cloudflare :/
-- [ ] fix mobile-view bunching
 - [ ] add first draft of about me page
 - [ ] favicon generation?
-- [ ] launch v1
 - [ ] pdf generation
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart
