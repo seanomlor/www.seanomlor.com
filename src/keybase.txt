@@ -1,0 +1,65 @@
+==================================================================
+https://keybase.io/seanomlor
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://seanomlor.com
+  * I am seanomlor (https://keybase.io/seanomlor) on keybase.
+  * I have a public key with fingerprint B81F 03DE A389 DBFF 0F3A  C7E6 C906 40F6 6039 A6D5
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "b81f03dea389dbff0f3ac7e6c90640f66039a6d5",
+            "host": "keybase.io",
+            "key_id": "c90640f66039a6d5",
+            "uid": "257c6c7f391471a6bcfe258ab6c2e500",
+            "username": "seanomlor"
+        },
+        "service": {
+            "hostname": "seanomlor.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1417665450,
+    "expire_in": 157680000,
+    "prev": "6189937cb1bb91ee5d50c14185c9356bccaa73d3630fd30b99d41e0c56fb4599",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v1.1.6
+Comment: https://keybase.io/crypto
+
+yMHhAnicbZFdSBRRFMfXtTTtA0PECLMchaVabcaZubN3qJd6SLBikQwhdZu5c8ed
+dGe22a9MzChLrSjWFCENksio7EGzF8GyWtEIkjQFEeohsYJMQqgHU7sj9RLdl8s5
+5/f/n3M4sY3xtuS4zBTcfniWS4x7PbgQsh2tm35QQ8mGUk2JNVQlXv1UTa/Apt/U
+9CAlUrKLUWlWwRLrgoqsqrTKSkjAAEEacLQKAM1CCSg85aS8RsBSEBtZCuA8zSA5
+Eng0hWT/w4dWC/m8gAASVBYynMBIQEYqzuddkgxQPuZp2gID2NQlHyZ0AEu64asy
+TKrWSQIzrCFsDW31/hfJQ4aPqP2mETSQUUVK3mDQL1rKYLXfQiNY9vwx8ciarpDN
+iSCMzYBm6JTIEBIFNcuV4RgBAJ7jaSeFT/s1E3s0i+AF4KLJs9rgMLEEjAtCVkAy
+I8uQwZhXeBoRtYtHkOXJdkiSBFZhAUurCkvLECocg2nEA1XmeAgpa61TukGJLBlT
+qrAW0ip0KRgyMVX7YrB0jS0u2Zaw1m7dzpaclPL3ou92J66E5XG8Zaf9kSOrvfNQ
+wtz61Kz+vYsdJ3vGmxxi091hVCCjddFscWyoHs3blz5u3mZfODi1VJTRknnifWx7
+2SupcP+98zcnK7WCz/Cat/itt37szNe26dIPNypnHIlqrLV/4tMVJnt0srF7Zd8R
+12hxy7PYHXdqfPNyL9s10M+VhqKLC7nNhbmTT64eWGwpetrB+eHWnMuN9ExoJL2v
+zJ7HlfT1nAvPoLbyTVmDtS+/z32L/JxPA18eH482LGe0u0tiA9cFIzpx7FdGV+/y
+pchQ+X24p7VhF3Vh+Metbt9I+u20kHtHZ26STzw7lXOxGLnfPKx7Pgs20E4FRn4D
+7nMTSw==
+=XrTZ
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/seanomlor
+
+==================================================================

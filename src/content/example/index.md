@@ -1,7 +1,6 @@
 ---
 title: 'Example'
 ---
-
 ## Fractions: [1/2]{.frac} [3/4]{.frac}
 
 ## Superscripts: [1234]{.sup}

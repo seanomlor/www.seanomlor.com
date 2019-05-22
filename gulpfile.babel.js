@@ -1,12 +1,14 @@
 import _ from 'lodash'
 import autoprefixer from 'autoprefixer'
 import crypto from 'crypto'
+import dayjs from 'dayjs'
 import del from 'del'
 import fs from 'fs'
 import gulp from 'gulp'
 import gulpData from 'gulp-data'
 import gulpFrontMatter from 'gulp-front-matter'
 import gulpHtmlhint from 'gulp-htmlhint'
+import gulpIf from 'gulp-if'
 import gulpImagemin from 'gulp-imagemin'
 import gulpNewer from 'gulp-newer'
 import gulpNoop from 'gulp-noop'
@@ -23,6 +25,7 @@ import gulpWrap from 'gulp-wrap'
 import inquirer from 'inquirer'
 import MarkdownIt from 'markdown-it'
 import markdownItAttrs from 'markdown-it-attrs'
+import markdownItNamedHeadings from 'markdown-it-named-headings'
 import markdownItBracketedSpans from 'markdown-it-bracketed-spans'
 import markdownItFootnote from 'markdown-it-footnote'
 import markdownItPrism from 'markdown-it-prism'
@@ -40,9 +43,13 @@ const browserSync = browserSyncCreate()
 const markdownIt = new MarkdownIt({
   html: true,
 })
+  // disable indentation-based code blocks
+  .disable(['code'])
   // support spans via brackets
   // e.g. `hello [foo] bar` => `hello <span>foo</span> bar`
   .use(markdownItBracketedSpans)
+  // automatically add ids to heading tags
+  .use(markdownItNamedHeadings)
   // support markdown styles
   // e.g. `# hello {.red}` => `<h1 class="red">hello</h1>`
   .use(markdownItAttrs)
@@ -95,27 +102,105 @@ gulp.task('images', () =>
     .pipe(gulp.dest('dist/images'))
 )
 
+// task: copy txt, ico files and media folder
+const rootMediaGlobs = [
+  'src/*.ico',
+  'src/*.txt',
+  'src/android-*.png',
+  'src/apple-*.png',
+  'src/favicon-*.png',
+  'src/site.webmanifest',
+]
+gulp.task(
+  'media',
+  gulp.parallel(
+    () =>
+      gulp
+        .src('src/media/**/*')
+        .pipe(gulpNewer('dist/media'))
+        .pipe(gulp.dest('dist/media')),
+    () =>
+      gulp
+        .src(rootMediaGlobs)
+        .pipe(gulpNewer('dist'))
+        .pipe(gulp.dest('dist'))
+  )
+)
+
 // task:
 // 1. copy raw markdown
 // 2. compile markdown to html with nunjucks template
 gulp.task('md', () =>
   gulp
-    .src('src/content/**/*.md')
+    .src('src/content/**/*.md?(.njk)')
     .pipe(gulpPlumber({ errorHandler }))
-    .pipe(gulp.dest('dist'))
+    // parse frontmatter into data attribute
     .pipe(gulpFrontMatter({ property: 'data' }))
+    // add info about file
     .pipe(
-      // parse manifest.json and return manifest data for use in templates:
-      //   {
-      //     manifest: {
-      //       'css/main.css': {
-      //         path: '/css/main-5da6bfc502.css',
-      //         hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
-      //      },
-      //      ...
-      //     }
-      //   }
-      gulpData(_file => ({
+      gulpData(file => {
+        const stats = fs.statSync(file.path)
+        const createdAt = dayjs(stats.birthtime)
+        const updatedAt = dayjs(stats.mtime)
+
+        return {
+          createdAt: createdAt.toISOString(),
+          createdAtDisplay: createdAt.format('MMMM D, YYYY [at] h:mma'),
+          updatedAt: updatedAt.toISOString(),
+          updatedAtDisplay: updatedAt.format('MMMM D, YYYY [at] h:mma'),
+        }
+      })
+    )
+    // pre-process *.md.njk as nunjucks
+    .pipe(
+      gulpIf(
+        file => file.extname === '.njk',
+        gulpWrap(data => data.file.contents.toString(), null, {
+          engine: 'nunjucks',
+        })
+      )
+    )
+    // remove .njk extensions
+    .pipe(
+      gulpRename(path => {
+        if (path.extname === '.njk') {
+          path.extname = '.md'
+          path.basename = path.basename.split('.md')[0]
+        }
+      })
+    )
+    // copy markdown as-is to dist now
+    .pipe(gulp.dest('dist'))
+    // change extension to html
+    .pipe(gulpRename({ extname: '.html' }))
+    /*
+      merge additional keys into data attribute:
+
+        1. id: page id
+          - 'index.html'      -> 'index'
+          - 'foo/index.html'  -> 'foo--index'
+          - 'foo/bar.html'    -> 'foo--bar'
+          - 'foo/bar/baz.html' -> 'foo--bar--baz'
+
+        2. manifest: parse manifest.json into data.manifest attribute
+          'css/main.css': {
+            path: '/css/main-5da6bfc502.css',
+            hash: 'sha384-+FsvcNcsxdZpZp3gOUkmaU7z2JHHK4KRsDgrG...'
+          },
+          ...
+
+        3. path: add relative path to data, removing index.html suffix
+          - 'index.html'     -> '/'
+          - 'foo/index.html' -> '/foo'
+
+    */
+    .pipe(
+      gulpData(file => ({
+        id: path
+          .relative(`${__dirname}/dist`, file.path)
+          .replace(/\//, '--')
+          .replace(/\.html$/, ''),
+        // date: fs.statSync(file.path).birthtime,
         manifest: _.reduce(
           JSON.parse(fs.readFileSync('dist/manifest.json')),
           (accum, path, asset) => ({
@@ -127,22 +212,25 @@ gulp.task('md', () =>
           }),
           {}
         ),
+        path: path
+          .join('/', path.relative(`${__dirname}/dist`, file.path))
+          .replace(/^\/index.html$/, '/')
+          .replace(/\/index.html$/, ''),
       }))
     )
+    // convert markdown to html
     .pipe(
-      // convert markdown to html
       gulpTap(file => {
         const result = markdownIt.render(file.contents.toString())
         file.contents = Buffer.from(result)
-        file.extname = '.html'
         return file
       })
     )
+    // wrap with nunjucks template from data.layout, default index.njk
     .pipe(
       gulpWrap(
-        // get template from layout attribute, default to index.njk
         data => {
-          const template = `${path.parse(data.layout || 'page').name}.njk`
+          const template = `${path.parse(data.layout || 'default').name}.njk`
           return fs.readFileSync(`src/templates/${template}`).toString()
         },
         null,
@@ -213,7 +301,10 @@ gulp.task('serve', () =>
     callbacks: {
       ready: (_err, bs) => {
         // serve *.md files as text/plain
-        bs.utils.serveStatic.mime.define({ 'text/plain': ['md'] })
+        bs.utils.serveStatic.mime.define({
+          'text/plain': ['md'],
+          'application/manifest+json': ['webmanifest'],
+        })
       },
     },
   })
@@ -227,11 +318,15 @@ gulp.task('reload', done => {
 
 // task: watch src, trigger build and reload
 gulp.task('watch', () => {
-  gulp.watch('src/content/**/*.md', gulp.series('md', 'reload'))
+  gulp.watch('src/content/**/*.md?(.njk)', gulp.series('md', 'reload'))
   gulp.watch('src/css/**/*.scss', gulp.series('css', 'md', 'reload'))
   gulp.watch('src/fonts/**/*', gulp.series('fonts', 'reload'))
   gulp.watch('src/images/**/*', gulp.series('images', 'reload'))
   gulp.watch('src/js/**/*.js', gulp.series('js', 'md', 'reload'))
+  gulp.watch(
+    rootMediaGlobs.concat(['src/media/**/*']),
+    gulp.series('media', 'reload')
+  )
   gulp.watch('src/templates/**/*.njk', gulp.series('md', 'reload'))
 })
 
@@ -239,7 +334,10 @@ gulp.task('watch', () => {
 gulp.task('clean', () => del(['dist/**/*']))
 
 // task: build site
-gulp.task('build', gulp.series('clean', 'fonts', 'images', 'css', 'js', 'md'))
+gulp.task(
+  'build',
+  gulp.series('clean', 'fonts', 'images', 'media', 'css', 'js', 'md')
+)
 
 // task: deploy via rsync
 gulp.task('deploy:rsync', done => {

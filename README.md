@@ -47,25 +47,31 @@
 - [x] production build for webpack
 - [x] deploy task
 - [x] replace deprecated gulp-util
-- [ ] finish porting existing pages
-  - [ ] home
-    - [ ] add contact form to templates/home.njk
-  - [ ] resume
-  - [ ] resume pdf (src/media)
-  - [ ] contact (anchor to home#contact for now)
-  - [ ] favicon (generator?)
-  - [ ] robots.txt
-  - [ ] keybase.txt
-  - [ ] add date modified
-    ```html
-    <time itemprop="dateModified" datetime="2017-03-20">
-      March 20th, 2017
-    </time>
-    ```
-- [ ] download latest fira code fonts to src/fonts instead of cdn
-- [ ] deploy with an nginx conf / restart?
-- [ ] launch v1
+- [x] test drive prepack build size
+- [x] highlight nav of currently active page
+- [x] add an id to the body of layout with name of page
+- [x] finish porting existing pages
+  - [x] home
+    - [x] add contact form to templates/home.njk
+    - [x] add testimonials
+  - [x] contact
+  - [x] resume
+    - [x] resume pdf (src/media)
+  - [x] favicon
+  - [x] robots.txt
+  - [x] keybase.txt
+  - [x] add date modified
+- [x] change favicon to a ghost
 - [ ] add first draft of about me page
+- [ ] favicon generation?
+- [ ] launch v1
+- [ ] pdf generation
+- [ ] download latest fira code fonts to src/fonts instead of cdn
+- [ ] deploy with an nginx conf / restart
 - [ ] consider indieweb: https://indiewebify.me
+- [ ] add article json-ld
+      figure out how to nest json-ld, e.g. creator of article is entire person.json
+      https://www.fabian-keller.de/blog/adding-json-ld-to-a-personal-website
 - [ ] include `parent`, `children`, `siblings` in `file.data`, e.g. for breadcrumps and lists
 - [ ] cleanup `dist` files not in `src`, e.g. from renames or deletes
+- [ ] something to "like" or heart posts
