@@ -124,7 +124,7 @@ h2,
 h3 {
   a {
     color: $color-black;
-    border-bottom: none;
+    border-bottom: 1px dotted $color-black;
 
     &:hover {
       border-bottom: 2px solid $color-black;
