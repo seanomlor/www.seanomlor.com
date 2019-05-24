@@ -1,13 +1,13 @@
 $color-black: #333;
-$color-white: #fffefd;
-$color-grey: #6c6c6c;
-$color-light: #afafba;
 $color-blue: #109cd9;
-$color-red: #d12812;
+$color-grey: #6c6c6c;
 $color-highlight: #fcfaf5;
-$grid-column-aside: 300;
+$color-light: #afafba;
+$color-red: #d12812;
+$color-white: #fffefd;
+$grid-column-aside: 280;
 $grid-gap: 10;
-$sidenotes-max-width: 1420px;
+$max-width: 1260px;
 
 @font-face {
   font-family: 'Lora';
@@ -79,13 +79,16 @@ body {
   font-size: 1.15em;
   font-weight: 400;
   grid-gap: #{$grid-gap}px;
-  grid-template-areas: 'header header header' 'aside-left content aside-right' 'footer footer footer';
+  grid-template-areas:
+    'header header header'
+    'aside-left content aside-right'
+    'footer footer footer';
   grid-template-columns: #{$grid-column-aside}px 1fr #{$grid-column-aside}px;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
   line-height: 1.75em;
   margin: 0 auto;
-  max-width: 1390px;
+  max-width: $max-width;
   padding: 15px;
   text-shadow: 0 0 1px transparentize($color-grey, 0.8);
 }
@@ -146,7 +149,7 @@ header[role='banner'],
 main[role='main'],
 footer[role='contentinfo'] {
   position: relative;
-  max-width: 770px;
+  max-width: 680px;
   width: 100%;
 }
 
@@ -164,7 +167,6 @@ header[role='banner'] {
 
   .logo {
     font-size: 1.65rem;
-    margin-bottom: 10px;
     float: left;
 
     a {
@@ -243,11 +245,13 @@ aside#right {
 }
 
 footer[role='contentinfo'] {
-  grid-area: footer;
   border-top: 1px solid $color-grey;
   color: $color-grey;
+  font-size: 1rem;
   font-weight: 300;
-  padding-bottom: 20px;
+  grid-area: footer;
+  margin-top: 20px;
+  padding-bottom: 10px;
   text-align: right;
 
   a {
@@ -349,7 +353,7 @@ img.avatar {
   }
 }
 
-@media (max-width: $sidenotes-max-width) {
+@media (max-width: $max-width + 20) {
   body {
     grid-template-areas:
       'header'

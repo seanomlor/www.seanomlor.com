@@ -110,7 +110,7 @@ const createInsertSidenote = () => {
 const sidenotes = () => {
   window.onload = () => {
     let done = false
-    addMediaQueryListener('(min-width: 1420px)', _e => {
+    addMediaQueryListener('(min-width: 1280px)', _e => {
       if (!done) {
         const insertSideNote = createInsertSidenote()
         document.querySelectorAll('sup.footnote-ref a').forEach(insertSideNote)
