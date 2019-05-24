@@ -3,7 +3,7 @@ import del from 'del'
 import gulp from 'gulp'
 
 import { globs } from './gulp.config'
-import { fonts, images, media } from './tasks/media'
+import { favicons, fonts, images, media } from './tasks/media'
 import { startServer, reloadServer } from './tasks/devServer'
 import deployRsync from './tasks/deployRsync'
 import markdown from './tasks/markdown'
@@ -17,6 +17,7 @@ const clean = done => {
 
 const build = gulp.series(
   clean,
+  favicons,
   fonts,
   images,
   media,
@@ -26,6 +27,7 @@ const build = gulp.series(
 )
 
 const watch = done => {
+  gulp.watch(globs.favicon, gulp.series(favicons, reloadServer))
   gulp.watch(globs.fonts, gulp.series(fonts, reloadServer))
   gulp.watch(globs.images, gulp.series(images, reloadServer))
   gulp.watch(globs.markdown, gulp.series(markdown, reloadServer))
@@ -44,4 +46,4 @@ forEach({ clean, build, watch, deploy, dev }, (f, k) => {
   f.displayName = k
 })
 
-export { deploy, dev }
+export { build, clean, deploy, dev, favicons }

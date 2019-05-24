@@ -1,10 +1,36 @@
 import gulp from 'gulp'
+import gulpFavicons from 'gulp-favicons'
 import gulpPlumber from 'gulp-plumber'
 import gulpImagemin from 'gulp-imagemin'
 import gulpNewer from 'gulp-newer'
 
 import errorHandler from './errorHandler'
 import { globs } from '../gulp.config.js'
+
+const favicons = () =>
+  gulp
+    .src(globs.favicon)
+    .pipe(gulpPlumber({ errorHandler }))
+    .pipe(
+      gulpFavicons({
+        icons: {
+          favicons: true,
+          android: false,
+          appleIcon: false,
+          appleStartup: false,
+          coast: false,
+          firefox: false,
+          windows: false,
+          yandex: false,
+        },
+        logging: true,
+        pipeHTML: false,
+        replace: true,
+      })
+    )
+    .pipe(gulp.dest('dist'))
+
+favicons.displayName = 'favicons'
 
 const fonts = () =>
   gulp
@@ -34,4 +60,4 @@ const media = () =>
 
 media.displayName = 'media'
 
-export { fonts, images, media }
+export { favicons, fonts, images, media }
