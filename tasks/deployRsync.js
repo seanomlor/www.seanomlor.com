@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import gulp from 'gulp'
 import gulpNoop from 'gulp-noop'
 import gulpRsync from 'gulp-rsync'

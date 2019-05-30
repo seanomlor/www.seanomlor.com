@@ -55,9 +55,10 @@
 - [x] launch v1
 - [x] fix mobile-view bunching
 - [x] favicon generation?
+- [x] add first draft of about me page
+- [ ] fix :not(pre) > code font-size on mobile
 - [ ] use favicon.svg - need vector editor to fill ghost
 - [ ] fix sri through cloudflare :/
-- [ ] add first draft of about me page
 - [ ] pdf generation
 - [ ] download latest fira code fonts to src/fonts instead of cdn
 - [ ] deploy with an nginx conf / restart
