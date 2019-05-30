@@ -108,8 +108,8 @@ const createInsertSidenote = () => {
  * now or whenever asides become visible at min-width breakpoint.
  */
 const sidenotes = () => {
-  window.onload = () => {
-    let done = false
+  let done = false
+  window.addEventListener('load', () => {
     addMediaQueryListener('(min-width: 1280px)', _e => {
       if (!done) {
         const insertSideNote = createInsertSidenote()
@@ -118,7 +118,7 @@ const sidenotes = () => {
         console.info('sidenotes: done.')
       }
     })
-  }
+  })
 }
 
 export default sidenotes
