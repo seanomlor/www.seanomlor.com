@@ -10,7 +10,7 @@ www.seanomlor.com — somlor@gmail.com — 215-317-0255 {.resume}
 
 Web application developer with over fifteen years of professional experience. Focused on functional web application architecture using Elixir, Phoenix and React.js.
 
-### Work Experience
+### Work Experience {#work-experience}
 
 **Lead Elixir Developer**  
 StatMuse — San Francisco, CA  

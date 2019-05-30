@@ -16,6 +16,7 @@ import markdownItAttrs from 'markdown-it-attrs'
 import markdownItNamedHeadings from 'markdown-it-named-headings'
 import markdownItBracketedSpans from 'markdown-it-bracketed-spans'
 import markdownItFootnote from 'markdown-it-footnote'
+import markdownItImplicitFigures from 'markdown-it-implicit-figures'
 import markdownItPrism from 'markdown-it-prism'
 import path from 'path'
 
@@ -30,13 +31,16 @@ const markdownIt = new MarkdownIt({
   // support spans via brackets
   // e.g. `hello [foo] bar` => `hello <span>foo</span> bar`
   .use(markdownItBracketedSpans)
-  // automatically add ids to heading tags
-  .use(markdownItNamedHeadings)
+  // FIXME: automatically add ids to heading tags
+  // breaks when combined with markdownItAttrs
+  // .use(markdownItNamedHeadings)
   // support markdown styles
   // e.g. `# hello {.red}` => `<h1 class="red">hello</h1>`
   .use(markdownItAttrs)
   // generate footnotes
   .use(markdownItFootnote)
+  // add <figure> around <img> occuring on their own line
+  .use(markdownItImplicitFigures)
   // add code highlight classes
   .use(markdownItPrism)
 
@@ -125,7 +129,7 @@ const markdown = () =>
     .pipe(
       gulpData(file => ({
         id: path
-          .relative(`${__dirname}/dist`, file.path)
+          .relative('./dist', file.path)
           .replace(/\//, '--')
           .replace(/\.html$/, ''),
         manifest: _.reduce(
@@ -140,7 +144,7 @@ const markdown = () =>
           {}
         ),
         path: path
-          .join('/', path.relative(`${__dirname}/dist`, file.path))
+          .join('/', path.relative('./dist', file.path))
           .replace(/^\/index.html$/, '/')
           .replace(/\/index.html$/, ''),
       }))

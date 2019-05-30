@@ -145,6 +145,20 @@ a {
   }
 }
 
+a[href$='jpg'],
+a[href$='png'],
+a[href$='gif'] {
+  border-bottom: none !important;
+
+  &:hover {
+    border-bottom: none;
+  }
+}
+
+figure {
+  margin: 0;
+}
+
 header[role='banner'],
 main[role='main'],
 footer[role='contentinfo'] {
@@ -227,11 +241,68 @@ main[role='main'] {
       margin-top: 0;
     }
   }
+
+  img {
+    border-radius: 3px;
+
+    &.center {
+      width: 100%;
+    }
+
+    &.left {
+      float: left;
+      margin-right: 15px;
+    }
+
+    &.right {
+      float: right;
+      margin-left: 15px;
+    }
+  }
+
+  .footnotes {
+    .footnote-item {
+      clear: both;
+    }
+
+    figure + p {
+      margin-top: 0;
+    }
+
+    figure {
+      img {
+        max-width: 100%;
+      }
+
+      &:hover:before {
+        cursor: pointer;
+      }
+
+      &::before {
+        content: '\f03e';
+        font-family: 'Font Awesome 5 Free';
+        font-size: 1.5rem;
+      }
+
+      > a:first-child,
+      > img:first-child {
+        display: none;
+        &.show {
+          display: block;
+        }
+      }
+    }
+  }
 }
 
 aside#left,
 aside#right {
   position: relative;
+
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
 }
 
 aside#left {
@@ -299,6 +370,10 @@ img.avatar {
   font-size: 1rem;
   font-weight: 300;
   clear: both;
+
+  code {
+    font-size: inherit;
+  }
 }
 
 #sidenotes-left .sidenote-number {
@@ -310,11 +385,14 @@ img.avatar {
 }
 
 .sidenote {
-  opacity: 0.75;
+  filter: saturate(0);
+  opacity: 0.65;
   position: absolute;
+  transition: all 0.1s ease-in-out;
 
   &.hover,
   &:hover {
+    filter: saturate(1);
     opacity: 1;
 
     .sidenote-content {
@@ -336,8 +414,8 @@ img.avatar {
     border-style: solid;
     border-width: 1px 0;
     clear: both;
-    padding: 10px;
     margin-bottom: 20px;
+    padding: 10px;
 
     a.footnote-backref {
       display: none;
@@ -464,19 +542,19 @@ p.resume {
   margin: 10px 0;
   padding: 20px;
 
+  figure:first-child {
+    grid-area: t_avatar;
+
+    img {
+      border-radius: 100%;
+      width: 120px;
+    }
+  }
+
   p {
     margin: 0;
 
     &:first-child {
-      grid-area: t_avatar;
-
-      img {
-        border-radius: 100%;
-        width: 120px;
-      }
-    }
-
-    &:nth-child(2) {
       grid-area: t_content;
     }
 

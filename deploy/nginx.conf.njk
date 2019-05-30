@@ -1,0 +1,14 @@
+server {
+  listen 80;
+  server_name seanomlor.com;
+  return 301 $scheme://www.seanomlor.com$request_uri;
+}
+
+server {
+  listen 80;
+  server_name www.seanomlor.com;
+
+  root {{ remote.publicPath }};
+  access_log {{ remote.logPath }}/nginx.access.log;
+  error_log {{ remote.logPath }}/log/nginx.error.log;
+}
