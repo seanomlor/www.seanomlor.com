@@ -94,13 +94,15 @@ After App Academy, I did a Ruby on Rails tour of duty at several startups[^exper
 
 [^experience]: See [work experience](/resume/#work-experience) for more details.
 
-As I gained more experience with production Rails systems, my few, specific frustrations with Ruby[^rubymeh] began corroding to glum with each unmaintainable wreckage I wrestled, ultimately crumbling into a broader disillusionment with object-oriented programming itself.
+As I gained more experience with production Rails systems, my few, specific frustrations[^rubymeh] began corroding to gloom with each untenable wreckage I wrestled, ultimately crumbling into a broader disillusionment with object-oriented programming itself.
 
 [^rubymeh]: For example, the lack of primitives for safe concurrency leading to convoluted solutions for async tasks.
 
-In early 2015 I began studying Clojure, Elixir[^elixir], and Haskell. 
+In early 2015 I began my journey into functional programming, studying Clojure, Elixir[^elixir], and Haskell.
 
-Just one year later, I took a full-time role leading the development of a complex backend in Elixir for an [AI startup](https://www.statmuse.com). I've been shipping Elixir to production ever since, over three years now. What a fantastic language, ecosystem and community.
+Just one year later, I took a full-time role leading the development of a complex backend in Elixir for an [AI startup](https://www.statmuse.com).
+
+I've been shipping Elixir to production ever since, over three years now. I continue to feel impressed and grateful for this fantastic language, ecosystem and community.
 
 [^elixir]:
     ![](/images/book-programming-elixir.jpg)
@@ -111,8 +113,13 @@ Just one year later, I took a full-time role leading the development of a comple
 
 What does the future hold?
 
-- Sharpen my saws: Elixir, Erlang and PostgreSQL
-- Keep climbing the [Haskell](https://github.com/seanomlor/programming-in-haskell) mountain
-- Find my sea legs with [Rust](https://doc.rust-lang.org/book)
-- Dive deeper into [GraphQL](https://graphql.org)
-- Continue tinkering with [ClojureScript](https://github.com/Day8/re-frame)
+- Sharpen my saws: Elixir[^erlang], JavaScript[^tojs] and PostgreSQL
+- Dig deeper into GraphQL and Elasticsearch
+- Broaden my understanding of [network engineering](https://www.professormesser.com/network-plus/n10-007/n10-007-training-course/)
+- Find my sea legs with Rust
+- Continue climbing the [Haskell](https://github.com/seanomlor/programming-in-haskell) mountain
+- Keep poking at [category theory](https://www.blurb.com/b/9008339-category-theory-for-programmers) and [dependent types](https://www.amazon.com/Little-Typer-MIT-Press/dp/0262536439)
+
+[^erlang]: Also Erlang!
+
+[^tojs]: Also [ClojureScript](https://github.com/Day8/re-frame), [TypeScript](https://www.typescriptlang.org) and [Reason](https://reasonml.github.io)!
