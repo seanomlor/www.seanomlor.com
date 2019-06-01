@@ -370,25 +370,39 @@ img.avatar {
   font-size: 1rem;
   font-weight: 300;
   clear: both;
+  min-height: 100%;
 
   code {
     font-size: inherit;
   }
 }
 
-#sidenotes-left .sidenote-number {
-  float: right;
+#sidenotes-left {
+  .sidenote {
+    right: 0;
+  }
+
+  .sidenote-number {
+    float: right;
+  }
 }
 
-#sidenotes-right .sidenote-number {
-  float: left;
+#sidenotes-right {
+  .sidenote {
+    left: 0;
+  }
+
+  .sidenote-number {
+    float: left;
+  }
 }
 
 .sidenote {
   filter: saturate(0);
   opacity: 0.65;
   position: absolute;
-  transition: all 0.1s ease-in-out;
+  transition: filter 0.15s ease-in-out, opacity 0.15s ease-in-out,
+    top 0.05s ease-in-out;
 
   &.hover,
   &:hover {

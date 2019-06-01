@@ -1,3 +1,18 @@
+import ResizeObserver from 'resize-observer-polyfill'
+
+const overlap = new ResizeObserver(entries => {
+  for (const entry of entries) {
+    const el = entry.target
+    const nextEl = el.nextSibling
+    if (nextEl) {
+      const newOffset = el.offsetTop + el.offsetHeight
+      if (newOffset > nextEl.offsetTop) {
+        nextEl.setAttribute('style', `top: ${newOffset}px;`)
+      }
+    }
+  }
+})
+
 /**
  * Given a mediaQuery string and a handler function, attach a listener to the
  * window and call the handler with true|false when the media query changes.
@@ -23,24 +38,6 @@ const addMediaQueryListener = (mediaQuery, handler) => {
  * @param {Element} elements.footnoteRefEl - footnote reference element
  *
  */
-const getOffsetTop = ({ sidenotesEl, footnoteRefEl }) => {
-  // minimum offset is this footnoteRefEl.offsetTop
-  const footnoteRefOffset = footnoteRefEl.offsetTop
-
-  // get offset + height of last element in sidenotes container's parent
-  // this is needed in case there is content above the sidenotes container
-  const parentEl = sidenotesEl.offsetParent.lastElementChild
-  const parentOffset = sidenotesEl.offsetTop + parentEl.offsetHeight
-
-  // get offset + height of last element in sidenotes container (or 0)
-  const lastSidenodeEl = sidenotesEl.lastElementChild
-  const lastChildOffset = lastSidenodeEl
-    ? lastSidenodeEl.offsetTop + lastSidenodeEl.offsetHeight
-    : 0
-
-  // return max value of all three offsets
-  return Math.max(footnoteRefOffset, parentOffset, lastChildOffset)
-}
 
 /**
  * Returns a function to insert sidenotes, preventing duplicated querySelector
@@ -63,12 +60,18 @@ const createInsertSidenote = () => {
     const footnoteId = footnoteRefEl.hash.substr(1)
     const footnoteEl = document.querySelector(`li#${footnoteId}`)
     const sidenotesEl = number % 2 === 0 ? leftEl : rightEl
-    const offsetTop = getOffsetTop({ sidenotesEl, footnoteRefEl })
+
+    // init position is same vertical position as footnote
+    const offsetTop = footnoteRefEl.offsetTop
 
     //create sidenote
     // TODO: add logic when sidenote is > a chosen max height, set height
     // with overflow-y: scroll
     const sidenoteEl = document.createElement('div')
+
+    // attach observer to sidenote to reposition if overlapping
+    overlap.observe(sidenoteEl)
+
     sidenoteEl.setAttribute('id', `sn${number}`)
     sidenoteEl.setAttribute('class', `sidenote`)
     sidenoteEl.setAttribute('style', `top: ${offsetTop}px;`)
