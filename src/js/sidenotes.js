@@ -101,18 +101,20 @@ const sidenotes = () => {
         const insertSideNote = createInsertSidenote()
         document.querySelectorAll('sup.footnote-ref a').forEach(insertSideNote)
 
-        // reinspect sidenotes and reposition if overlapping
+        // after dom dust settles, reinspect sidenotes and reposition overlaps
         // TODO: add logic when sidenote is > a chosen max height, set height
         // with overflow-y: scroll
-        document.querySelectorAll('.sidenote').forEach(el => {
-          const nextEl = el.nextSibling
-          if (nextEl) {
-            const newOffsetTop = parseInt(el.style.top) + el.offsetHeight
-            if (newOffsetTop > nextEl.offsetTop) {
-              nextEl.setAttribute('style', `top: ${newOffsetTop}px;`)
+        setTimeout(() => {
+          document.querySelectorAll('.sidenote').forEach(el => {
+            const nextEl = el.nextSibling
+            if (nextEl) {
+              const newOffsetTop = parseInt(el.style.top) + el.offsetHeight
+              if (newOffsetTop > nextEl.offsetTop) {
+                nextEl.setAttribute('style', `top: ${newOffsetTop}px;`)
+              }
             }
-          }
-        })
+          })
+        }, 100)
 
         console.info('sidenotes: done.')
       }
