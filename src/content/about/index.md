@@ -3,7 +3,7 @@ title: 'About Me'
 ---
 My name is Sean Omlor. I am a web developer creeping up on twenty years of professional experience.
 
-## 1980s
+<!-- ## 1980s -->
 
 I first started programming [BASIC](https://en.wikipedia.org/wiki/TI_BASIC_(TI_99/4A))[^basic] in the mid-80s when I was around 9 years old on our family [Texas Instrument TI-99](https://en.wikipedia.org/wiki/Texas_Instruments_TI-99/4A).
 
@@ -19,7 +19,7 @@ Within a few years, I upgraded us to an [80286](https://en.wikipedia.org/wiki/In
 [^20mb]:
     I remember wondering how in the world I would ever use this much disk space.
 
-## 1990s
+<!-- ## 1990s -->
 
 I continued building Frankenstein PCs from parts I saved up for or convinced my parents to buy me. To their chagrin, I'm not sure I ever closed a computer case in the 90s.[^80286]
 
@@ -34,7 +34,7 @@ In secondary school, I formally studied BASIC and [Pascal](https://en.wikipedia.
 
 I wrote software for the school [Apple IIe](https://en.wikipedia.org/wiki/Apple_IIe) to help me study Spanish and which was later adopted by my Spanish teacher for use with other students. I wrote code for my [TI-81](https://en.wikipedia.org/wiki/TI-81) to help work through math problems and which also ended up widely circulated among my peers and used by at least one of my math teachers.
 
-## 2000s
+<!-- ## 2000s -->
 
 After high school, I majored in computer science as the obvious thing. These were pre-Java days, and my classes were all in C. Programming in C bummed me out.
 
@@ -77,7 +77,7 @@ In 2007 I went freelance and lightly dipped into the digital nomad thing.[^zancu
 
     Playa Zancudo, Costa Rica, where I lived for one year.
 
-## 2010s
+<!-- ## 2010s -->
 
 A few years into my freelancing run, I began studying Ruby[^ruby]. I started building custom sites for clients with Ruby, [Sinatra](http://sinatrarb.com), and [Ruby on Rails](https://rubyonrails.org). This web development thing was becoming more and more fun.
 
@@ -109,7 +109,7 @@ I've been shipping Elixir to production ever since, over three years now. I cont
 
     My first of many Elixir books.
 
-## 2020s
+<!-- ## 2020s -->
 
 What does the future hold?
 
