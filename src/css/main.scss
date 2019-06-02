@@ -613,7 +613,7 @@ p.resume {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 690px) {
   body {
     font-size: 1em;
   }
@@ -644,12 +644,10 @@ p.resume {
       't_content t_content'
       't_author t_author';
 
-    p {
-      &:first-child {
-        text-align: center;
-        img {
-          border: 1px solid $color-black;
-        }
+    figure:first-child {
+      text-align: center;
+      img {
+        border: 1px solid $color-black;
       }
     }
   }

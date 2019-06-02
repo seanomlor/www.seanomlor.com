@@ -43,6 +43,8 @@ pre[class*='language-'] {
   overflow: auto;
   border: 1px solid transparentize($base02, 0.65);
   border-radius: 0.1em;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 code,
@@ -58,6 +60,18 @@ pre[class*='language-'] {
   text-align: left;
   word-break: normal;
   word-spacing: normal;
+}
+
+@media (max-width: 690px) {
+  code,
+  pre {
+    font-size: 1rem;
+    line-height: 1.55rem;
+  }
+
+  pre[class*='language-'] {
+    width: 90vw !important;
+  }
 }
 
 // inline code
