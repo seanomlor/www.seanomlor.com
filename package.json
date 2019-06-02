@@ -65,7 +65,5 @@
     "webpack": "^4.31.0",
     "webpack-stream": "^5.2.1"
   },
-  "dependencies": {
-    "resize-observer-polyfill": "^1.5.1"
-  }
+  "dependencies": {}
 }

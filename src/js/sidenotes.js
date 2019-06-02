@@ -1,18 +1,3 @@
-import ResizeObserver from 'resize-observer-polyfill'
-
-const overlap = new ResizeObserver(entries => {
-  for (const entry of entries) {
-    const el = entry.target
-    const nextEl = el.nextSibling
-    if (nextEl) {
-      const newOffset = el.offsetTop + el.offsetHeight
-      if (newOffset > nextEl.offsetTop) {
-        nextEl.setAttribute('style', `top: ${newOffset}px;`)
-      }
-    }
-  }
-})
-
 /**
  * Given a mediaQuery string and a handler function, attach a listener to the
  * window and call the handler with true|false when the media query changes.
@@ -65,12 +50,7 @@ const createInsertSidenote = () => {
     const offsetTop = footnoteRefEl.offsetTop
 
     //create sidenote
-    // TODO: add logic when sidenote is > a chosen max height, set height
-    // with overflow-y: scroll
     const sidenoteEl = document.createElement('div')
-
-    // attach observer to sidenote to reposition if overlapping
-    overlap.observe(sidenoteEl)
 
     sidenoteEl.setAttribute('id', `sn${number}`)
     sidenoteEl.setAttribute('class', `sidenote`)
@@ -115,9 +95,25 @@ const sidenotes = () => {
   window.addEventListener('load', () => {
     addMediaQueryListener('(min-width: 1280px)', _e => {
       if (!done) {
+        done = true
+
+        // insert sidenotes
         const insertSideNote = createInsertSidenote()
         document.querySelectorAll('sup.footnote-ref a').forEach(insertSideNote)
-        done = true
+
+        // reinspect sidenotes and reposition if overlapping
+        // TODO: add logic when sidenote is > a chosen max height, set height
+        // with overflow-y: scroll
+        document.querySelectorAll('.sidenote').forEach(el => {
+          const nextEl = el.nextSibling
+          if (nextEl) {
+            const newOffsetTop = parseInt(el.style.top) + el.offsetHeight
+            if (newOffsetTop > nextEl.offsetTop) {
+              nextEl.setAttribute('style', `top: ${newOffsetTop}px;`)
+            }
+          }
+        })
+
         console.info('sidenotes: done.')
       }
     })
