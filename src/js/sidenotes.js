@@ -114,7 +114,11 @@ const sidenotes = () => {
               }
             }
           })
-        }, 100)
+
+          document
+            .querySelectorAll('#sidenotes-left, #sidenotes-right')
+            .forEach(el => el.classList.add('show'))
+        }, 50)
 
         console.info('sidenotes: done.')
       }

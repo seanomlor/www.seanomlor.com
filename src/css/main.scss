@@ -371,6 +371,12 @@ img.avatar {
   font-weight: 300;
   clear: both;
   min-height: 100%;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+
+  &.show {
+    opacity: 1;
+  }
 
   code {
     font-size: inherit;
