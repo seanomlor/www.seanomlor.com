@@ -56,7 +56,16 @@
 - [x] fix mobile-view bunching
 - [x] favicon generation?
 - [x] add first draft of about me page
-- [ ] fix :not(pre) > code font-size on mobile
+- [x] fix :not(pre) > code font-size on mobile
+- [x] add meta description
+- [ ] add og meta tags
+    ```
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="...">
+    <meta property="og:title" content="{{ file.data.title }} | Elixir and JavaScript Web Developer">
+    <meta property="og:description" content="Hello, my name is Sean. I'm a senior Elixir and JavaScript web developer.">
+    <meta property="og:url" content="...">
+    ```
 - [ ] use favicon.svg - need vector editor to fill ghost
 - [ ] fix sri through cloudflare :/
 - [ ] pdf generation
