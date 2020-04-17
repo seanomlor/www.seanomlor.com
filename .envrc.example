@@ -1,0 +1,2 @@
+export RSYNC_HOSTNAME=mysite
+export RSYNC_DESTINATION=/var/www/mysite

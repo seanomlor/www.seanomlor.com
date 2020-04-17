@@ -8,7 +8,7 @@
  */
 const addMediaQueryListener = (mediaQuery, handler) => {
   const mediaQueryList = window.matchMedia(mediaQuery)
-  mediaQueryList.addListener(e => handler(e.matches))
+  mediaQueryList.addListener((e) => handler(e.matches))
   mediaQueryList.matches && handler(true)
 }
 
@@ -40,7 +40,7 @@ const createInsertSidenote = () => {
    * @param {Element} footnoteRefEl - footnote reference element
    *
    */
-  return footnoteRefEl => {
+  return (footnoteRefEl) => {
     const [_, number] = footnoteRefEl.id.split('fnref')
     const footnoteId = footnoteRefEl.hash.substr(1)
     const footnoteEl = document.querySelector(`li#${footnoteId}`)
@@ -93,7 +93,7 @@ const createInsertSidenote = () => {
 const sidenotes = () => {
   let done = false
   window.addEventListener('load', () => {
-    addMediaQueryListener('(min-width: 1280px)', _e => {
+    addMediaQueryListener('(min-width: 1280px)', (_e) => {
       if (!done) {
         done = true
 
@@ -105,7 +105,7 @@ const sidenotes = () => {
         // TODO: add logic when sidenote is > a chosen max height, set height
         // with overflow-y: scroll
         setTimeout(() => {
-          document.querySelectorAll('.sidenote').forEach(el => {
+          document.querySelectorAll('.sidenote').forEach((el) => {
             const nextEl = el.nextSibling
             if (nextEl) {
               const newOffsetTop = parseInt(el.style.top) + el.offsetHeight
@@ -117,10 +117,10 @@ const sidenotes = () => {
 
           document
             .querySelectorAll('#sidenotes-left, #sidenotes-right')
-            .forEach(el => el.classList.add('show'))
+            .forEach((el) => el.classList.add('show'))
         }, 50)
 
-        console.info('sidenotes: done.')
+        // console.info('sidenotes: done.')
       }
     })
   })

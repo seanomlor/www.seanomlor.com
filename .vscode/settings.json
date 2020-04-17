@@ -1,5 +1,7 @@
 {
   "files.associations": {
-    "**/*.md.njk": "markdown"
+    "**/*.md.njk": "markdown",
+    ".stylelintrc": "json",
+    ".prettierrc": "json"
   }
 }

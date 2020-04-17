@@ -14,7 +14,7 @@ Web application developer with over fifteen years of professional experience. Fo
 
 **Lead Elixir Developer**  
 StatMuse — San Francisco, CA  
-March 2016 to Present (3+ years)
+March 2016 to Present (4+ years)
 
 Lead engineer on Elixir and Phoenix backend for mix of static, React and iOS frontend applications.
 
