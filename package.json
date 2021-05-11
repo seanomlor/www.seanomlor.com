@@ -46,7 +46,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-wrap": "^0.15.0",
     "htmlhint-stylish": "^1.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "markdown-it": "^8.4.2",
     "markdown-it-attrs": "^2.4.1",
     "markdown-it-bracketed-spans": "^1.0.1",
